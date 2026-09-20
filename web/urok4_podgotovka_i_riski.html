@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="ДПО-1. Урок 4: подготовка информации для работы с ИИ, правовые и репутационные риски. Две пары по 90 минут.">
+  <title>ДПО-1 · Урок 4 · Подготовка информации и риски применения ИИ</title>
+  <link rel="stylesheet" href="shared.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#content">Перейти к содержанию</a>
+<div class="progress-line" id="progressLine" aria-hidden="true"></div>
+<header class="topbar">
+  <div class="brand">ДПО-1 · УРОК 4</div>
+  <nav class="topnav" aria-label="Навигация по уроку">
+    <a href="#orientation">Структура</a><a href="#block1">1 · Повторение</a><a href="#block2">2 · Подготовка данных</a><a href="#block3">3 · Загрузка</a><a href="#block4">4 · Риски</a><a href="#artifacts">Результат</a><a href="#sources">Источники</a>
+  </nav>
+  <div class="top-actions"><button class="btn" id="teacherToggle" type="button" aria-pressed="false">Режим преподавателя</button></div>
+</header>
+<main id="content">
+  <section class="hero" id="top">
+    <div class="wrap">
+      <span class="eyebrow">ДПО-1 · две пары · синтетические данные</span>
+      <h1>Подготовка информации для работы с ИИ. Правовые и репутационные риски</h1>
+      <p class="lead">За 180 минут участники пройдут путь от постановки задачи и минимизации входа до проверки источников, прав, фактов, предвзятости и подлинности поручения.</p>
+      <div class="hero-grid">
+        <div>
+          <div class="metric-grid" aria-label="Параметры урока">
+            <div class="metric"><strong>180</strong><span>минут работы</span></div><div class="metric"><strong>4×45</strong><span>академических блока</span></div><div class="metric"><strong>10</strong><span>интерактивов</span></div><div class="metric"><strong>2</strong><span>итоговых артефакта</span></div>
+          </div>
+          <div class="timer teacher-only" aria-label="Таймер урока">
+            <div class="timer-display" id="lessonTimer">180:00</div>
+            <div class="timer-controls"><button class="btn" id="timerStart" type="button">Старт</button><button class="btn" id="timerPause" type="button">Пауза</button><button class="btn" id="timerReset" type="button">Сброс</button></div>
+          </div>
+        </div>
+        <div class="safety-card"><strong>Правило занятия</strong>Используем только условные данные. Настройка сервиса не является разрешением организации на передачу рабочих сведений. Если категория данных или допустимый контур неизвестны — действие останавливается до уточнения.</div>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="orientation">
+    <div class="section-head"><div class="section-num">0</div><div><div class="section-kicker">Ориентация · 5 минут внутри первого блока</div><h2>Что должно получиться к концу занятия</h2><p>Участник создаёт два переносимых результата: паспорт безопасной задачи и карту правового и репутационного риска. Их можно применить к новой задаче до первого запроса в ИИ.</p></div></div>
+    <div class="timeline">
+      <div class="time-card"><span class="time">0–45 минут</span><strong>Безопасный маршрут задачи</strong><p>Что хотим получить, что действительно нужно передать и где остановиться.</p></div>
+      <div class="time-card"><span class="time">45–90 минут</span><strong>Подготовка данных</strong><p>Исключение, замена, обобщение и синтетические наборы.</p></div>
+      <div class="time-card"><span class="time">90–135 минут</span><strong>Файлы и настройки</strong><p>Скрытые слои, история, обучение, хранение и контуры.</p></div>
+      <div class="time-card"><span class="time">135–180 минут</span><strong>Права и репутация</strong><p>Источник, факты, предвзятость, дипфейки и ответственность.</p></div>
+    </div>
+    <div class="formula"><strong>ЗАДАЧА → МИНИМАЛЬНЫЙ ВХОД → РАЗРЕШЁННЫЙ КОНТУР → ПРОВЕРКА → РЕШЕНИЕ ЧЕЛОВЕКА</strong><p>Это сквозная логика всех четырёх блоков.</p></div>
+    <details class="teacher-note teacher-only" open><summary>Текст открытия урока</summary><div class="note-body">
+      <blockquote>Сегодня наша цель — не научиться загружать в нейросеть больше материалов. Наоборот: мы научимся получать полезный результат с минимально необходимым входом, в понятном контуре и с проверкой результата человеком.</blockquote>
+      <p>Попросите участников не называть реальные проекты, фамилии, параметры, инциденты и внутренние названия. Все ответы переводите в условные категории: «отчёт», «таблица», «инструкция», «письмо», «изображение».</p>
+      <div class="if-silent"><strong>Если зал молчит:</strong> предложите задачу: «Нужно получить пустую структуру служебной записки о статусе условного проекта». Спросите, нужен ли реальный документ целиком. Ответ: нет, достаточно назначения и желаемых полей.</div>
+    </div></details>
+  </section>
+  <section class="section alt" id="block1"><div class="inner">
+    <div class="section-head"><div class="section-num">1</div><div><div class="section-kicker">Первая пара · 0–45 минут</div><h2>Повторение: безопасный маршрут задачи</h2><p>Результат блока — участник определяет требуемый результат, минимальный вход, условие остановки, контур и способ проверки.</p></div></div>
+    <div class="timeline">
+      <div class="time-card"><span class="time">0–10</span><strong>Сначала задача</strong><p>От результата к минимально необходимой информации.</p></div>
+      <div class="time-card"><span class="time">10–20</span><strong>Четыре решения</strong><p>Можно, преобразовать, уточнить, не передавать.</p></div>
+      <div class="time-card"><span class="time">20–33</span><strong>Три маршрута</strong><p>Полный файл, поверхностная маскировка, безопасный фрагмент.</p></div>
+      <div class="time-card"><span class="time">33–45</span><strong>Паспорт задачи</strong><p>Мини-практика, обсуждение и резерв.</p></div>
+    </div>
+    <div class="slide-deck" data-slide-range="1-7" aria-label="Слайды блока 1">
+      <div class="slide-toolbar"><strong>Слайды 001–007</strong><div class="slide-nav"><button class="btn" data-prev type="button">←</button><button class="btn" data-next type="button">→</button></div></div><div class="slide-stage"></div><div class="slide-meta"><span class="slide-caption"></span><span class="slide-counter"></span></div>
+    </div>
+    <div class="card-grid">
+      <article class="card accent"><h3>Начинаем не с файла</h3><p>Фраза «проанализировать документ» слишком широкая. Уточняем результат: выделить темы, получить структуру, найти расхождения, сформировать вопросы или подготовить черновик.</p><p><strong>Проверка:</strong> если убрать конкретные данные, задача всё ещё решается? Если да — они не нужны на входе.</p></article>
+      <article class="card accent"><h3>Граница данных</h3><p>Открытый источник не означает автоматически «можно копировать без проверки». Внутренний документ не означает автоматически «нельзя использовать ни при каких условиях». Важно знать категорию, цель, продукт и правила организации.</p></article>
+      <article class="card accent"><h3>Условие остановки</h3><p>Если неизвестна категория сведений, допустимый продукт, режим учётной записи или получатель результата, безопасный следующий шаг — не угадывать, а уточнить.</p></article>
+    </div>
+    <details class="teacher-note teacher-only" open><summary>Сценарий объяснения · 8 минут</summary><div class="note-body">
+      <blockquote>Представьте, что вам нужен не «анализ всего документа», а только список обязательных разделов. Тогда полный исходник — не ресурс, а лишний риск. Чем точнее сформулирован результат, тем меньше данных потребуется.</blockquote>
+      <p>Покажите три маршрута: загрузить полный файл; удалить только имя; создать новый пустой шаблон или минимальный синтетический фрагмент. Третий маршрут соответствует цели без лишнего раскрытия.</p>
+      <div class="if-silent"><strong>Вопрос:</strong> «Что останется в запросе, если нужна только структура документа?»<br><strong>Резервный ответ:</strong> назначение, аудитория, желаемые разделы, тон и формат; реальные фамилии, даты, показатели и вложения не нужны.</div>
+    </div></details>
+    <div class="interactive" id="sixGates">
+      <div class="interactive-head"><div><h3>Интерактив · Шесть ворот безопасного маршрута</h3><p>Последовательность не разрешает перепрыгнуть неизвестную категорию или контур.</p></div><span aria-hidden="true">01</span></div>
+      <div class="interactive-body">
+        <div class="step-route"><div class="route-step"><strong>Результат</strong><span>Какой конкретный артефакт нужен?</span></div><div class="route-step"><strong>Минимум</strong><span>Какие сведения влияют на результат?</span></div><div class="route-step"><strong>Категория</strong><span>Что это за данные и кому можно их видеть?</span></div><div class="route-step"><strong>Контур</strong><span>Разрешены ли продукт, режим и получатель?</span></div><div class="route-step"><strong>Подготовка</strong><span>Что исключить, заменить или обобщить?</span></div><div class="route-step"><strong>Проверка</strong><span>Кто проверит факты, права и последствия?</span></div></div>
+        <div class="control-row"><button class="btn primary" data-start type="button">Запустить</button><button class="btn" data-pause type="button">Пауза</button><button class="btn" data-reset type="button">Сбросить</button></div><div class="feedback" id="sixGatesFeedback" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="interactive" id="dataSort">
+      <div class="interactive-head"><div><h3>Практика · Светофор данных без ложной простоты</h3><p>Для каждого синтетического примера выберите безопасное действие.</p></div><span aria-hidden="true">02</span></div>
+      <div class="interactive-body">
+        <div class="sort-grid"><div class="data-cards">
+          <div class="data-card" data-expected="allow" data-short="пустой шаблон"><label>Пустой шаблон письма</label><select aria-label="Действие для пустого шаблона"><option value="">Выберите</option><option value="allow">Можно использовать</option><option value="transform">Преобразовать</option><option value="clarify">Уточнить</option><option value="stop">Не передавать</option></select></div>
+          <div class="data-card" data-expected="transform" data-short="учебная таблица"><label>Учебная таблица с точными датами и редкой ролью</label><select aria-label="Действие для таблицы"><option value="">Выберите</option><option value="allow">Можно использовать</option><option value="transform">Преобразовать</option><option value="clarify">Уточнить</option><option value="stop">Не передавать</option></select></div>
+          <div class="data-card" data-expected="clarify" data-short="внутренняя инструкция"><label>Внутренняя инструкция неизвестной категории</label><select aria-label="Действие для инструкции"><option value="">Выберите</option><option value="allow">Можно использовать</option><option value="transform">Преобразовать</option><option value="clarify">Уточнить</option><option value="stop">Не передавать</option></select></div>
+          <div class="data-card" data-expected="stop" data-short="кадровый файл"><label>Реальный кадровый файл для внешнего сервиса</label><select aria-label="Действие для кадрового файла"><option value="">Выберите</option><option value="allow">Можно использовать</option><option value="transform">Преобразовать</option><option value="clarify">Уточнить</option><option value="stop">Не передавать</option></select></div>
+          <div class="data-card" data-expected="clarify" data-short="изображение из интернета"><label>Изображение из поисковой выдачи</label><select aria-label="Действие для изображения"><option value="">Выберите</option><option value="allow">Можно использовать</option><option value="transform">Преобразовать</option><option value="clarify">Уточнить</option><option value="stop">Не передавать</option></select></div>
+          <div class="data-card" data-expected="transform" data-short="полная запись встречи"><label>Полная запись встречи для списка тем</label><select aria-label="Действие для записи"><option value="">Выберите</option><option value="allow">Можно использовать</option><option value="transform">Преобразовать</option><option value="clarify">Уточнить</option><option value="stop">Не передавать</option></select></div>
+        </div><div class="card"><h3>Как рассуждать</h3><ol><li>Не оценивайте только название файла.</li><li>Сначала зафиксируйте цель.</li><li>Проверьте скрытые слои и права.</li><li>Если ответ зависит от внутренних правил — выбирайте «уточнить».</li></ol></div></div>
+        <div class="control-row"><button class="btn primary" data-check type="button">Проверить</button><button class="btn" data-reset type="button">Сбросить</button></div><div class="feedback" aria-live="polite">Распределите карточки и нажмите «Проверить».</div>
+      </div>
+    </div>
+    <div class="callout"><strong>Мини-демонстрация:</strong> вместо полного документа отправьте модели описание: «Создай пустой шаблон служебной записки о статусе условного проекта. Поля: цель, выполнено, отклонения, следующий шаг, ответственный по роли, срок по периоду».</div>
+    <details class="teacher-note teacher-only"><summary>Проверка понимания и резерв · 7 минут</summary><div class="note-body"><ol><li>«Если удалить имя, набор становится обезличенным». Неверно как универсальное правило.</li><li>«Для пустого шаблона можно создать синтетический пример». Обычно да, если он не повторяет реальный объект.</li><li>«Выключенная история разрешает загрузку рабочих данных». Нет, это разные вопросы.</li></ol><div class="if-silent"><strong>Если зал молчит:</strong> покажите ответы и попросите назвать одно слово, которое изменило решение: цель, категория, контур или проверка.</div></div></details>
+  </div></section>
+  <section class="section" id="block2">
+    <div class="section-head"><div class="section-num">2</div><div><div class="section-kicker">Первая пара · 45–90 минут</div><h2>Подготовка данных: исключить, заменить, обобщить или создать заново</h2><p>Результат блока — учебный минимизированный набор, в котором удаление имени не выдаётся за достаточное обезличивание.</p></div></div>
+    <div class="timeline">
+      <div class="time-card"><span class="time">45–57</span><strong>Четыре метода</strong><p>Исключение, псевдонимизация, обобщение и синтетические данные.</p></div><div class="time-card"><span class="time">57–71</span><strong>Косвенные признаки</strong><p>Уникальные комбинации и повторная идентификация.</p></div><div class="time-card"><span class="time">71–82</span><strong>Баланс</strong><p>Снижаем точность, не уничтожая полезность.</p></div><div class="time-card"><span class="time">82–90</span><strong>Практика</strong><p>Создаём условный набор и фиксируем ограничения.</p></div>
+    </div>
+    <div class="slide-deck" data-slide-range="8-14" aria-label="Слайды блока 2"><div class="slide-toolbar"><strong>Слайды 008–014</strong><div class="slide-nav"><button class="btn" data-prev type="button">←</button><button class="btn" data-next type="button">→</button></div></div><div class="slide-stage"></div><div class="slide-meta"><span class="slide-caption"></span><span class="slide-counter"></span></div></div>
+    <div class="card-grid">
+      <article class="card"><h3>Исключение</h3><p>Удаляем поля и строки, которые не нужны для цели. Это первый и часто самый сильный способ снизить риск.</p></article>
+      <article class="card"><h3>Замена</h3><p>Меняем прямой идентификатор на код. Если таблица соответствия существует, доступ к ключу остаётся отдельным риском.</p></article>
+      <article class="card"><h3>Обобщение</h3><p>Точная дата становится периодом, участок — группой, возраст — диапазоном, редкая роль — профессиональной категорией.</p></article>
+      <article class="card"><h3>Синтетический набор</h3><p>Создаём новые условные строки по структуре задачи. Они не копируют реальные строки и уникальные сочетания.</p></article>
+      <article class="card"><h3>Прямые признаки</h3><p>Имя, телефон, почта, фотография, табельный номер и другие явные идентификаторы.</p></article>
+      <article class="card"><h3>Косвенные признаки</h3><p>Редкая должность, точное время, возраст, участок и событие могут вместе указывать на одного человека.</p></article>
+    </div>
+    <details class="teacher-note teacher-only" open><summary>Демонстрация на синтетической таблице · 10 минут</summary><div class="note-body">
+      <p>Покажите три условные строки: A-17, 63 года, редкий специалист, участок C, 14.03.2026; B-04, 34 года, инженер, участок A; C-12, 35 лет, инженер, участок A.</p>
+      <blockquote>Если удалить только код, первая строка всё равно может быть уникальной: возраст, редкая роль, участок и точная дата складываются в узнаваемую комбинацию.</blockquote>
+      <p>Преобразуйте: возраст 60–69; роль — технический специалист; участок — производственная группа; дата — I квартал. Затем спросите: остаётся ли результат пригодным для учебной задачи?</p>
+      <div class="if-silent"><strong>Если зал молчит:</strong> попросите выбрать только один первый шаг. Начать следует с удаления полей, которые вообще не нужны.</div>
+    </div></details>
+    <div class="interactive" id="reidentification">
+      <div class="interactive-head"><div><h3>Интерактив · Риск повторной идентификации</h3><p>Скрытие имени не устраняет уникальную комбинацию.</p></div><span aria-hidden="true">03</span></div>
+      <div class="interactive-body">
+        <table class="matrix"><thead><tr><th>Код</th><th>Возраст</th><th>Роль</th><th>Участок</th><th>Дата</th></tr></thead><tbody><tr><td>скрыт</td><td>63</td><td>редкий специалист</td><td>C</td><td>14.03.2026</td></tr></tbody></table>
+        <div class="switches" style="margin-top:16px"><label><input type="checkbox"> Обобщить возраст</label><label><input type="checkbox"> Обобщить роль</label><label><input type="checkbox"> Обобщить участок</label><label><input type="checkbox"> Обобщить дату</label></div>
+        <div class="risk-meter" data-level="3" aria-hidden="true"><i></i><i></i><i></i></div><div class="feedback risk-label" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="interactive" id="generalization">
+      <div class="interactive-head"><div><h3>Интерактив · Лестница обобщения</h3><p>Найдите минимальный уровень детализации, достаточный для задачи.</p></div><span aria-hidden="true">04</span></div>
+      <div class="interactive-body">
+        <div class="sliders"><div class="slider-card"><label>Дата: точная → месяц → квартал → год<input type="range" min="0" max="3" value="1"></label></div><div class="slider-card"><label>Возраст: точный → диапазон → широкая группа<input type="range" min="0" max="3" value="1"></label></div><div class="slider-card"><label>Роль: редкая → функция → профессиональная группа<input type="range" min="0" max="3" value="1"></label></div><div class="slider-card"><label>Подразделение: точное → группа → крупный блок<input type="range" min="0" max="3" value="1"></label></div></div>
+        <div class="dual-meter"><div class="meter-card"><strong>Риск уникальности</strong><div class="meter-bar"><i data-risk-bar></i></div></div><div class="meter-card"><strong>Полезность для задачи</strong><div class="meter-bar"><i data-utility-bar></i></div></div></div><div class="feedback" data-summary></div>
+      </div>
+    </div>
+    <div class="callout warn"><strong>Методическая оговорка:</strong> учебное преобразование показывает способ мышления, но не подтверждает формальное обезличивание реального набора. Для реальной обработки нужны внутренняя методика, оценка риска и уполномоченные специалисты.</div>
+    <details class="teacher-note teacher-only"><summary>Практика создания условного набора · 8 минут</summary><div class="note-body">
+      <p>Дайте структуру: три условные роли, два периода, два типа статуса. Попросите создать четыре полностью новые строки без копирования исходных сочетаний.</p>
+      <p><strong>Критерии:</strong> нет реальных имён и кодов; нет точных редких сочетаний; структура пригодна для демонстрации; явно написано, что данные синтетические.</p>
+      <div class="if-silent"><strong>Готовый вариант:</strong> «Технический специалист, производственная группа, I квартал, повторная проверка»; «Инженерная группа, испытательное направление, II квартал, завершено».</div>
+    </div></details>
+  </section>
+  <section class="section alt" id="block3"><div class="inner">
+    <div class="section-head"><div class="section-num">3</div><div><div class="section-kicker">Вторая пара · 90–135 минут</div><h2>Загрузка документов, история запросов и корпоративная информация</h2><p>Результат блока — чек-лист перед загрузкой и понимание того, что обработка, история, обучение, память, хранение и разрешение организации — разные вопросы.</p></div></div>
+    <div class="timeline">
+      <div class="time-card"><span class="time">90–101</span><strong>Минимальный вход</strong><p>Файл → страница → фрагмент → требования.</p></div><div class="time-card"><span class="time">101–112</span><strong>Скрытые слои</strong><p>Комментарии, свойства, скрытые строки, медиа и ссылки.</p></div><div class="time-card"><span class="time">112–128</span><strong>Жизненный цикл</strong><p>Обработка, история, обучение, память, хранение и удаление.</p></div><div class="time-card"><span class="time">128–135</span><strong>Контуры</strong><p>Внешний, корпоративный и локальный варианты.</p></div>
+    </div>
+    <div class="slide-deck" data-slide-range="15-21" aria-label="Слайды блока 3"><div class="slide-toolbar"><strong>Слайды 015–021</strong><div class="slide-nav"><button class="btn" data-prev type="button">←</button><button class="btn" data-next type="button">→</button></div></div><div class="slide-stage"></div><div class="slide-meta"><span class="slide-caption"></span><span class="slide-counter"></span></div></div>
+    <div class="formula"><strong>ПОЛНЫЙ ФАЙЛ ≠ НЕОБХОДИМЫЙ ВХОД</strong><p>Контейнер почти всегда содержит больше, чем нужно конкретной задаче.</p></div>
+    <details class="teacher-note teacher-only" open><summary>Текст демонстрации минимизации · 8 минут</summary><div class="note-body">
+      <blockquote>Если нужна структура презентации, не передавайте отчёт целиком. Сначала выпишите тему, аудиторию, ограничения и пять фактов, которые действительно должны попасть в результат.</blockquote>
+      <p>Продемонстрируйте цепочку: папка из десяти файлов → один документ → одна страница → пять тезисов → запрос. Минимизация одновременно снижает риск и разгружает контекст модели.</p>
+      <div class="if-silent"><strong>Вопрос:</strong> «Что можно убрать без изменения результата?»<br><strong>Резервный ответ:</strong> авторов, историю изменений, соседние разделы, служебные коды, вложения и точные значения, не влияющие на структуру.</div>
+    </div></details>
+    <div class="interactive" id="fileLayers">
+      <div class="interactive-head"><div><h3>Интерактив · Слои файла</h3><p>Кликните по слою, чтобы увидеть риск и безопасное действие.</p></div><span aria-hidden="true">05</span></div>
+      <div class="interactive-body"><div class="layer-layout">
+        <div class="layer-buttons"><button data-layer="visible" type="button">Видимый текст</button><button data-layer="comments" type="button">Комментарии и исправления</button><button data-layer="properties" type="button">Свойства файла</button><button data-layer="hidden" type="button">Скрытые строки и листы</button><button data-layer="media" type="button">Встроенные изображения</button><button data-layer="links" type="button">Ссылки и подключения</button></div>
+        <div class="document-stack"><div class="doc-sheet" aria-hidden="true"></div><div style="position:absolute;left:28px;right:28px;bottom:24px;background:#fff;padding:13px;border-radius:10px;border:1px solid var(--line)"><strong data-layer-title></strong><p data-layer-copy style="margin:5px 0 0;color:var(--muted)"></p></div></div>
+      </div></div>
+    </div>
+    <div class="interactive" id="lifeCycle">
+      <div class="interactive-head"><div><h3>Интерактив · Жизненный цикл запроса</h3><p>Выключение обучения не удаляет остальные этапы.</p></div><span aria-hidden="true">06</span></div>
+      <div class="interactive-body"><div class="life-route"><div class="life-node">Ввод</div><div class="life-node">Обработка</div><div class="life-node">Ответ</div><div class="life-node">История</div><div class="life-node">Хранение</div><div class="life-node">Удаление</div></div><div class="control-row"><button class="btn primary" data-start type="button">Запустить</button><button class="btn" data-pause type="button">Пауза</button><button class="btn" data-reset type="button">Сбросить</button></div><div class="feedback" id="lifeFeedback" aria-live="polite"></div></div>
+    </div>
+    <div class="card-grid">
+      <article class="card"><h3>История</h3><p>Показывает, сохраняется ли разговор в интерфейсе и можно ли к нему вернуться. Это не полный ответ о техническом хранении.</p></article>
+      <article class="card"><h3>Улучшение модели</h3><p>Отдельная настройка использования новых разговоров для улучшения моделей. Выключение не превращает внешний сервис в корпоративный контур.</p></article>
+      <article class="card"><h3>Временный чат</h3><p>Имеет отдельные правила истории, памяти, улучшения модели и хранения. Перед показом откройте актуальную официальную справку.</p></article>
+      <article class="card"><h3>Память</h3><p>Может использовать сведения между разговорами. Её состояние не равно истории и не заменяет политику организации.</p></article>
+      <article class="card"><h3>Подключённые действия</h3><p>Диск, почта, браузер и внешние действия создают дополнительные каналы передачи и требуют отдельной проверки.</p></article>
+      <article class="card"><h3>Корпоративный порядок</h3><p>Разрешённый продукт, роли доступа, договорные условия, журналирование и контроль важнее цвета переключателя.</p></article>
+    </div>
+    <div class="callout"><strong>Актуальная демонстрация ChatGPT:</strong> показывайте только учебную учётную запись. Откройте Data Controls и отдельно Temporary Chat. В актуальной справке OpenAI отключение улучшения модели сохраняет разговор в истории, а временный чат имеет собственные правила и может храниться до 30 дней для безопасности.</div>
+    <details class="teacher-note teacher-only"><summary>Контуры и контрольный кейс · 10 минут</summary><div class="note-body">
+      <p><strong>Внешний сервис:</strong> проверяем правила организации, условия продукта, учётную запись, получателя и минимизацию.</p><p><strong>Корпоративный контур:</strong> проверяем доступ, подключённые источники, разграничение прав, журналы и сопровождение.</p><p><strong>Локальная модель:</strong> отсутствие внешнего соединения не отменяет доступ, журналирование, обновления, качество и ответственность.</p>
+      <div class="if-silent"><strong>Кейс:</strong> помощник показал фрагмент кадрового документа, недоступного пользователю. Прекратить извлечение, не собирать новые фрагменты, зафиксировать минимум фактов и сообщить ответственным.</div>
+    </div></details>
+    <div class="callout warn"><strong>Перерыв:</strong> после 90 минут предусмотрите 10–15 минут вне основного тайминга. Если это невозможно, используйте первые 3 минуты второго блока как тихую индивидуальную проверку чек-листа.</div>
+  </div></section>
+  <section class="section" id="block4">
+    <div class="section-head"><div class="section-num">4</div><div><div class="section-kicker">Вторая пара · 135–180 минут</div><h2>Правовые и репутационные риски применения ИИ</h2><p>Результат блока — карта риска результата: источник, право использования, подтверждение фактов, проверка предвзятости, подлинность поручения и ответственное лицо.</p></div></div>
+    <div class="timeline">
+      <div class="time-card"><span class="time">135–148</span><strong>Источник и права</strong><p>От поисковой выдачи к первоисточнику и условиям.</p></div><div class="time-card"><span class="time">148–160</span><strong>Происхождение и факты</strong><p>Синтетический контент и независимая проверка.</p></div><div class="time-card"><span class="time">160–172</span><strong>Предвзятость</strong><p>Контролируемые пары и одинаковые критерии.</p></div><div class="time-card"><span class="time">172–180</span><strong>Подлинность</strong><p>Независимый канал и ответственность человека.</p></div>
+    </div>
+    <div class="slide-deck" data-slide-range="22-30" aria-label="Слайды блока 4"><div class="slide-toolbar"><strong>Слайды 022–030</strong><div class="slide-nav"><button class="btn" data-prev type="button">←</button><button class="btn" data-next type="button">→</button></div></div><div class="slide-stage"></div><div class="slide-meta"><span class="slide-caption"></span><span class="slide-counter"></span></div></div>
+    <div class="card"><h3>Пять вопросов до использования материала</h3><ol><li>Кто создал исходный материал?</li><li>Где находится подтверждаемый первоисточник?</li><li>Какие условия использования или лицензия действуют?</li><li>Что изменил человек, а что создал ИИ?</li><li>Где и для какой аудитории будет использован результат?</li></ol></div>
+    <details class="teacher-note teacher-only" open><summary>Кейс «нашёл в интернете и переработал через ИИ» · 7 минут</summary><div class="note-body">
+      <p>Сотрудник нашёл фотографию оборудования в поисковой выдаче, попросил ИИ изменить фон и включил изображение в публичный отчёт без указания источника.</p>
+      <ul><li>поисковая выдача не является лицензией;</li><li>изменение фона не обнуляет права на исходник;</li><li>нужно открыть первоисточник и проверить условия;</li><li>если условия неясны — использовать собственный, лицензированный или заново созданный абстрактный визуал.</li></ul>
+      <div class="if-silent"><strong>Вопрос:</strong> «Можно ли считать изображение свободным, если нет водяного знака?»<br><strong>Ответ:</strong> нет. Отсутствие водяного знака не подтверждает отсутствие правообладателя или ограничений.</div>
+    </div></details>
+    <div class="interactive" id="rightsTree">
+      <div class="interactive-head"><div><h3>Интерактив · Проверка права использования</h3><p>Помогает выбрать следующий шаг, но не выдаёт юридическое заключение.</p></div><span aria-hidden="true">07</span></div>
+      <div class="interactive-body">
+        <div class="decision-grid">
+          <div class="question-card"><strong>Найден подтверждаемый первоисточник?</strong><select aria-label="Первоисточник"><option value="">Выберите</option><option value="yes">Да</option><option value="no">Нет</option><option value="unknown">Не знаю</option></select></div>
+          <div class="question-card"><strong>Понятны условия использования?</strong><select aria-label="Условия"><option value="">Выберите</option><option value="yes">Да</option><option value="no">Нет</option><option value="unknown">Не знаю</option></select></div>
+          <div class="question-card"><strong>Разрешён нужный способ использования?</strong><select aria-label="Способ"><option value="">Выберите</option><option value="yes">Да</option><option value="no">Нет</option><option value="unknown">Не знаю</option></select></div>
+          <div class="question-card"><strong>Проверены права на все компоненты?</strong><select aria-label="Компоненты"><option value="">Выберите</option><option value="yes">Да</option><option value="no">Нет</option><option value="unknown">Не знаю</option></select></div>
+        </div><div class="control-row"><button class="btn primary" data-evaluate type="button">Оценить следующий шаг</button></div><div class="feedback" aria-live="polite">Ответьте на четыре вопроса.</div>
+      </div>
+    </div>
+    <div class="callout"><strong>Происхождение не равно истинности:</strong> Content Credentials/C2PA помогают фиксировать происхождение и изменения материала. Наличие метки не доказывает истинность всех утверждений, а отсутствие метки само по себе не доказывает подделку.</div>
+    <div class="interactive" id="claimsCheck">
+      <div class="interactive-head"><div><h3>Интерактив · Уверенный ответ модели</h3><p>Сначала открываем первичный источник, затем назначаем статус.</p></div><span aria-hidden="true">08</span></div>
+      <div class="interactive-body"><div class="claims">
+        <div class="claim" data-state="unknown"><strong>«Любой российский ИИ автоматически подходит для рабочих документов»</strong><p>Категоричное утверждение без внутренней политики и режима продукта.</p><div class="control-row"><button class="btn" data-source type="button">Открыть карточку источника</button><button class="btn" data-state type="button">Изменить статус</button></div><span class="status">Не подтверждено</span></div>
+        <div class="claim" data-state="unknown"><strong>«Если обучение отключено, данные нигде не сохраняются»</strong><p>Смешивает обучение, историю, память и техническое хранение.</p><div class="control-row"><button class="btn" data-source type="button">Открыть карточку источника</button><button class="btn" data-state type="button">Изменить статус</button></div><span class="status">Не подтверждено</span></div>
+        <div class="claim" data-state="unknown"><strong>«Естественный голос подтверждает личность отправителя»</strong><p>Не учитывает клонирование голоса и взлом аккаунта.</p><div class="control-row"><button class="btn" data-source type="button">Открыть карточку источника</button><button class="btn" data-state type="button">Изменить статус</button></div><span class="status">Не подтверждено</span></div>
+      </div></div>
+    </div>
+    <details class="teacher-note teacher-only"><summary>Алгоритм фактчекинга · 6 минут</summary><div class="note-body">
+      <ol><li>разделить ответ на проверяемые утверждения;</li><li>выделить значимые факты, числа и правовые выводы;</li><li>найти первичный официальный источник;</li><li>проверить дату, контекст и область применимости;</li><li>сравнить формулировку источника с выводом модели;</li><li>удалить или пометить неподтверждённое;</li><li>передать значимый вывод ответственному человеку.</li></ol>
+      <blockquote>Повторный вопрос той же модели помогает уточнить черновик, но не является независимой проверкой.</blockquote>
+    </div></details>
+    <div class="interactive" id="biasTest">
+      <div class="interactive-head"><div><h3>Интерактив · Контролируемая парная проверка</h3><p>Меняем один нейтральный признак, остальные условия сохраняем.</p></div><span aria-hidden="true">09</span></div>
+      <div class="interactive-body"><div class="decision-grid">
+        <div class="question-card"><strong>Вариант A</strong><p>Одинаковая квалификация, опыт и критерии. Нейтральное имя A.</p><select name="pair-a" aria-label="Вывод варианта A"><option value="approve">Рекомендует следующий этап</option><option value="clarify">Просит уточнение</option><option value="reject">Не рекомендует</option></select></div>
+        <div class="question-card"><strong>Вариант B</strong><p>Одинаковая квалификация, опыт и критерии. Нейтральное имя B.</p><select name="pair-b" aria-label="Вывод варианта B"><option value="approve">Рекомендует следующий этап</option><option value="clarify">Просит уточнение</option><option value="reject">Не рекомендует</option></select></div>
+      </div><div class="control-row"><button class="btn primary" data-compare type="button">Сравнить</button></div><div class="feedback" aria-live="polite">Выберите результаты двух прогонов.</div></div>
+    </div>
+    <div class="interactive" id="deepfakeScenario">
+      <div class="interactive-head"><div><h3>Интерактив · Необычное голосовое поручение</h3><p>«Срочно отправьте сводку на новый адрес. Никого не подключайте».</p></div><span aria-hidden="true">10</span></div>
+      <div class="interactive-body"><div class="scenario-options"><button data-choice="reply" type="button"><strong>Ответить в том же чате</strong><br>Попросить подтвердить подлинность.</button><button data-choice="link" type="button"><strong>Открыть приложенную ссылку</strong><br>Проверить адрес и выполнить указание.</button><button data-choice="known" type="button"><strong>Использовать известный контакт</strong><br>Остановить действие и подтвердить независимо.</button></div><div class="feedback" aria-live="polite">Выберите безопасный следующий шаг.</div></div>
+    </div>
+    <details class="teacher-note teacher-only"><summary>Что говорить о дипфейках · 6 минут</summary><div class="note-body">
+      <p>Неестественная мимика, дефекты звука и несоответствие света могут быть подсказками, но не надёжным тестом. Современная подделка может выглядеть убедительно, а обычная запись — иметь артефакты связи.</p>
+      <p>Безопасная последовательность: остановить действие; найти ранее известный контакт; подтвердить поручение другим каналом; проверить адресата и полномочия; сообщить ответственным при подозрении.</p>
+      <div class="if-silent"><strong>Если зал молчит:</strong> спросите только одно: «Какой контакт нельзя брать из подозрительного сообщения?» Ответ: любой номер, ссылка или адрес из самого сообщения.</div>
+    </div></details>
+    <div class="formula"><strong>ИИ ГОТОВИТ ВАРИАНТ. ЧЕЛОВЕК ПРОВЕРЯЕТ ОСНОВАНИЕ, СОДЕРЖАНИЕ, ПРАВА, ПОЛУЧАТЕЛЕЙ И ПОСЛЕДСТВИЯ.</strong></div>
+  </section>
+  <section class="section alt" id="artifacts"><div class="inner">
+    <div class="section-head"><div class="section-num">✓</div><div><div class="section-kicker">Итог занятия</div><h2>Два результата, которые остаются у участника</h2><p>Формы работают локально в браузере. Введённые значения никуда не отправляются.</p></div></div>
+    <div class="card" id="passportForm" data-title="Паспорт безопасной задачи" data-filename="passport-bezopasnoy-zadachi.txt">
+      <h3>Паспорт безопасной задачи</h3>
+      <div class="form-grid">
+        <div class="field"><label>Какой результат нужен?</label><textarea data-field="Результат"></textarea></div><div class="field"><label>Какие сведения необходимы?</label><textarea data-field="Минимальные сведения"></textarea></div><div class="field"><label>Что можно исключить?</label><textarea data-field="Исключить"></textarea></div><div class="field"><label>Что требует уточнения?</label><textarea data-field="Уточнить"></textarea></div><div class="field"><label>Какой контур предполагается?</label><textarea data-field="Контур"></textarea></div><div class="field"><label>Как подготовить условный материал?</label><textarea data-field="Подготовка"></textarea></div><div class="field"><label>Что и по каким источникам проверить?</label><textarea data-field="Проверка"></textarea></div><div class="field"><label>Кто принимает решение?</label><textarea data-field="Ответственный"></textarea></div>
+      </div><div class="control-row"><button class="btn primary" data-export-form="passportForm" type="button">Скачать заполненный паспорт</button></div>
+    </div>
+    <div class="card" id="riskForm" data-title="Карта правового и репутационного риска" data-filename="karta-riska-rezultata.txt" style="margin-top:18px">
+      <h3>Карта правового и репутационного риска</h3>
+      <div class="form-grid">
+        <div class="field"><label>Источник материала</label><textarea data-field="Источник"></textarea></div><div class="field"><label>Основание использования</label><textarea data-field="Права"></textarea></div><div class="field"><label>Что создано или изменено ИИ?</label><textarea data-field="Синтетичность"></textarea></div><div class="field"><label>Какие факты подтверждены?</label><textarea data-field="Факты"></textarea></div><div class="field"><label>Как проверялась предвзятость?</label><textarea data-field="Предвзятость"></textarea></div><div class="field"><label>Как подтверждена подлинность?</label><textarea data-field="Подлинность"></textarea></div><div class="field"><label>Кто согласует?</label><textarea data-field="Согласование"></textarea></div><div class="field"><label>Когда нужно остановиться?</label><textarea data-field="Условие остановки"></textarea></div>
+      </div><div class="control-row"><button class="btn primary" data-export-form="riskForm" type="button">Скачать заполненную карту</button></div>
+    </div>
+    <h3 style="margin-top:32px">Материалы для скачивания</h3>
+    <div class="downloads">
+      <a class="download" href="../downloads/task-passport.md" download><strong>Паспорт задачи</strong><span>Шаблон Markdown</span></a><a class="download" href="../downloads/risk-map.md" download><strong>Карта риска</strong><span>Шаблон Markdown</span></a><a class="download" href="../downloads/checklist-before-upload.md" download><strong>Перед загрузкой</strong><span>Чек-лист</span></a><a class="download" href="../downloads/synthetic-data.csv" download><strong>Синтетическая таблица</strong><span>CSV для практики</span></a>
+    </div>
+    <details class="teacher-note teacher-only" open><summary>Завершение урока · 5 минут</summary><div class="note-body">
+      <p>Попросите участников закончить три фразы:</p><ol><li>«Перед отправкой данных я сначала…»</li><li>«Если ответ ИИ выглядит уверенно, я…»</li><li>«Необычное поручение я подтвержу через…»</li></ol>
+      <div class="if-silent"><strong>Готовые ответы:</strong> формулирую результат и сокращаю вход; открываю первичный источник и проверяю дату; использую ранее известный независимый канал.</div>
+    </div></details>
+  </div></section>
+  <section class="section" id="sources">
+    <div class="section-head"><div class="section-num">S</div><div><div class="section-kicker">Проверено 21.09.2026</div><h2>Официальные и первичные источники</h2><p>Правовые материалы используются как учебный ориентир и не заменяют оценку профильного специалиста или внутренние документы организации.</p></div></div>
+    <div class="sources">
+      <div class="source"><strong>NIST SP 800-188</strong><br><a href="https://csrc.nist.gov/pubs/sp/800/188/final" target="_blank" rel="noopener">De-Identifying Government Datasets</a> — удаление идентификаторов, преобразование косвенных признаков, синтетические данные и оценка повторной идентификации.</div>
+      <div class="source"><strong>Федеральный закон № 152-ФЗ</strong><br><a href="https://www.consultant.ru/document/cons_doc_LAW_61801/" target="_blank" rel="noopener">Персональные данные</a> — определение персональных данных, цель и соразмерность обработки.</div>
+      <div class="source"><strong>OpenAI Help Center</strong><br><a href="https://help.openai.com/en/articles/7730893-data-controls-faq" target="_blank" rel="noopener">Data Controls FAQ</a> и <a href="https://help.openai.com/en/articles/8914046-temporary-chat-faq" target="_blank" rel="noopener">Temporary Chat FAQ</a> — актуальное различие настроек.</div>
+      <div class="source"><strong>Гражданский кодекс РФ</strong><br><a href="https://www.consultant.ru/document/cons_doc_LAW_64629/" target="_blank" rel="noopener">Часть IV</a> — авторство, исключительные права и способы использования.</div>
+      <div class="source"><strong>C2PA</strong><br><a href="https://c2pa.org/resources/" target="_blank" rel="noopener">Resources</a> — происхождение цифрового контента и Content Credentials.</div>
+      <div class="source"><strong>NIST AI RMF</strong><br><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">AI Risk Management Framework</a> — риски, человеческий контроль и предвзятость.</div>
+      <div class="source"><strong>Банк России</strong><br><a href="https://www.cbr.ru/information_security/pmp/15082024/" target="_blank" rel="noopener">Мошенники и дипфейки</a> — независимое подтверждение голосовых и видеосообщений.</div>
+      <div class="source"><strong>FBI</strong><br><a href="https://www.fbi.gov/investigate/cyber/alerts/2025/senior-us-officials-continue-to-be-impersonated-in-malicious-messaging-campaign" target="_blank" rel="noopener">Impersonation campaign</a> — проверка личности и канала связи.</div>
+      <div class="source"><strong>FTC</strong><br><a href="https://consumer.ftc.gov/consumer-alerts/2023/03/scammers-use-ai-enhance-their-family-emergency-schemes" target="_blank" rel="noopener">Voice cloning scams</a> — риски убедительного клонированного голоса.</div>
+      <div class="source"><strong>CISA</strong><br><a href="https://www.cisa.gov/sites/default/files/publications/tactics-of-disinformation_508.pdf" target="_blank" rel="noopener">Tactics of Disinformation</a> — контекст проверки недостоверных сообщений.</div>
+    </div>
+    <div class="callout stop"><strong>Важно:</strong> публичная страница не содержит реальных данных организации. Не вводите в формы фамилии, коды, параметры, сведения об инцидентах и иные рабочие данные.</div>
+  </section>
+</main>
+<footer class="footer"><div class="footer-grid"><div><strong>BUSINESS INTELLIGENCE 2026 · ДПО-1</strong><br><small>Подготовка информации для работы с ИИ · учебные синтетические материалы</small></div><div><small>НОЦ ВКО «Алмаз-Антей» · Клуб «ИИ в образовании»</small></div></div></footer>
+</body>
+</html>
