@@ -64,7 +64,7 @@ class Page(unittest.TestCase):
                 self.assertEqual(a[1], b[0])
 
     def test_twenty_slides_each_explained(self):
-        for n in range(1, 21):
+        for n in range(0, 28):
             self.assertIn(f'id="slide-{n:02d}"', TEXT)
             self.assertIn(f"Пояснение к слайду {n:02d}", TEXT)
         for im in [i for i in P_.imgs if i.get("src")]:
@@ -100,7 +100,7 @@ class Page(unittest.TestCase):
 
     def test_real_cases_have_sources(self):
         cases = re.findall(r'<div class="case-real fade">.*?</ul></div></div>', TEXT, flags=re.S)
-        self.assertGreaterEqual(len(cases), 13)
+        self.assertGreaterEqual(len(cases), 15)
         for c in cases:
             self.assertIn('href="https://', c)
             self.assertIn("Источники", c)
@@ -115,7 +115,12 @@ class Page(unittest.TestCase):
     def test_prompts_present(self):
         from prompts import PROMPTS
         for p in PROMPTS:
-            self.assertIn(f'id="prompt-{p["id"].lower()}"', TEXT)
+            self.assertIn(f'id="pk-{p["id"].lower()}"', TEXT)  # нижний блок: все 20 промптов
+        for pid in ("u01", "u02", "u03", "u04", "u05", "u06", "u07", "u08", "u09", "u10"):
+            self.assertIn(f'id="prompt-{pid}"', TEXT)
+        for pid in ("pr1", "pr2", "pr3", "pr4", "pr5", "pr6", "pr7", "prd"):
+            self.assertIn(f'id="prompt-{pid}"', TEXT)
+        self.assertEqual(len(PROMPTS), 20)
         self.assertIn('id="prompt-analytic"', TEXT)
         self.assertIn('id="prompt-cand"', TEXT)
         self.assertNotIn("{{", TEXT)
@@ -125,6 +130,22 @@ class Page(unittest.TestCase):
         for p in PROMPTS:
             self.assertIsNone(re.search(r"\+7\s?\(?\d{3}", p["content"]), p["id"])
             self.assertIsNone(re.search(r"@\w+\.\w+", p["content"]), p["id"])
+
+    def test_copy_targets_exist_and_are_complete(self):
+        for target in re.findall(r'data-copy="([^"]+)"', TEXT):
+            self.assertIn(f'id="{target}"', TEXT, target)
+        self.assertIn("textContent", TEXT)
+        self.assertIn("execCommand", TEXT)
+
+    def test_role_is_accented(self):
+        self.assertIn("Указывайте роль в промпте", TEXT)
+        self.assertIn("формат, тон и позицию", TEXT)
+
+    def test_bottom_block_is_last(self):
+        self.assertGreater(TEXT.index('id="s13"'), TEXT.index('id="quiz"'))
+        self.assertGreater(TEXT.index('id="s13"'), TEXT.index('id="s12"'))
+        self.assertLess(TEXT.index('id="slide-00"'), TEXT.index('id="slide-21"'))
+        self.assertLess(TEXT.index('id="slide-00"'), TEXT.index('class="hero-title"'))
 
     def test_three_models_named(self):
         for m in ("GigaChat", "DeepSeek", "ChatGPT"):

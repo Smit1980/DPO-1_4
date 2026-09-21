@@ -9,3 +9,6 @@ __pycache__/
 .omc/
 web/_shot.html
 assets/
+png/urok4/
+data/sinteticheskie_zayavki_50.xlsx
+tools/konspekt_more.py

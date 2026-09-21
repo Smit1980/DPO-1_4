@@ -87,7 +87,10 @@ PROMPTS = [
 [Вставьте условный черновик из 5–6 предложений]"""),
 ]
 
-PROMPT_BY_ID = {p["id"]: p for p in PROMPTS}
+from prompts_more import MORE, PRACTICE  # noqa: E402
+PROMPTS = PROMPTS + MORE
+PRACTICE_PROMPTS = [dict(p, group="Практикум 1.3", description="Промпт кейса практикума 1.3. Данные условные.") for p in PRACTICE]
+PROMPT_BY_ID = {p["id"]: p for p in PROMPTS + PRACTICE_PROMPTS}
 
 
 def prompt_txt() -> str:

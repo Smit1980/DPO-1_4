@@ -11,6 +11,7 @@ IMG_DIR = "../png/urok4_podgotovka_i_riski"
 
 # Слайды: номер → (slug, заголовок). Имена файлов — NN_slug.jpg; исходник пользователя — png/urok4/N.png
 SLIDES = {
+    0: ("obzor_uroka", "Обзор урока: подготовка информации для работы с ИИ"),
     1: ("chto_uhodit_s_faylom", "Что уходит вместе с файлом"),
     2: ("pyat_voprosov_pered_zagruzkoy", "Пять вопросов перед загрузкой"),
     3: ("gde_zhivut_metadannye", "Где хранятся метаданные"),
@@ -31,6 +32,13 @@ SLIDES = {
     18: ("proverka_porucheniya", "Проверка поручения"),
     19: ("tsepochka_otvetstvennosti", "Цепочка ответственности"),
     20: ("pyat_proverok_rezultata", "Пять проверок результата ИИ"),
+    21: ("otkrytie_uroka", "Открытие урока: цепочка от задачи до решения"),
+    22: ("otkrytie_pary_2", "Открытие пары 2"),
+    23: ("zaversheniye_uroka", "Итог урока и домашнее задание"),
+    24: ("katalog_podelok", "Каталог подделок и вредоносных сценариев"),
+    25: ("instruktsiya_vnutri_faila", "Инструкция внутри файла"),
+    26: ("praktikum_poryadok_raboty", "Практикум: порядок работы"),
+    27: ("rol_dlya_chego", "Роль в промпте: для чего она нужна"),
 }
 
 
@@ -126,6 +134,11 @@ def pair_banner(n: int, title: str, theme: str, plan: list[tuple[str, str, str]]
 
 
 def sec(sid: str, num: str, title: str, desc: str, body: str, minutes: str = "") -> str:
+    try:
+        from content_extra import EXTRA
+        body = body + EXTRA.get(sid, lambda: "")()
+    except ImportError:
+        pass
     chip = f' <span class="time-chip">{minutes}</span>' if minutes else ""
     return (f'<section class="sec" id="{sid}"><div class="sec-head fade"><div class="num-badge n{num if num.isdigit() else 0}">{num}</div>'
             f'<h2 class="sec-title">{title}{chip}</h2><p class="sec-desc">{desc}</p></div>{body}</section>')
@@ -206,4 +219,28 @@ code{font-family:Consolas,'Courier New',monospace;font-size:.86em;background:var
 .three-models{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
 .three-models div{background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:12px 14px;font-size:.88rem;line-height:1.55}
 .three-models b{display:block;margin-bottom:4px}
+"""
+
+
+def deep(title: str, cards: str) -> str:
+    """Блок «Углублённый разбор» в конце раздела: материал для развёрнутого рассказа."""
+    return (f'<div class="deep-bar fade"><span>🔎 Углублённый разбор</span><b>{title}</b></div>{cards}')
+
+
+EXTRA_CSS_V4_2 = r"""
+.deep-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:34px 0 4px;padding:10px 16px;border-radius:12px;background:linear-gradient(90deg,#eef2ff,#e0f2fe);border:1px solid #c7d2fe}
+.deep-bar span{font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--indigo-dk)}
+.deep-bar b{font-size:1rem}
+.important{background:linear-gradient(180deg,#fff7ed,#fff);border:2px solid #fb923c;border-radius:16px;padding:18px 22px;margin-top:20px}
+.important .imp-tag{display:inline-block;background:#f97316;color:#fff;border-radius:100px;padding:2px 12px;font-size:.74rem;font-weight:800;margin-bottom:8px}
+.important p{font-size:.96rem;line-height:1.75}
+.important p+p{margin-top:8px}
+.copy-inline{float:right;margin:0 0 6px 10px}
+.db-wrap{position:relative}
+.db-wrap .copy-btn{position:absolute;right:10px;top:10px}
+.pk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px}
+.pk-grid .prompt-box pre{max-height:320px;overflow:auto}
+.case-mini{border:1px solid var(--border);border-radius:14px;background:#fff;padding:16px 20px;margin-top:14px}
+.case-mini h4{font-size:.95rem;font-weight:800;margin-bottom:6px}
+.case-mini .meta{font-size:.78rem;font-weight:800;color:var(--indigo-dk);text-transform:uppercase;letter-spacing:.06em}
 """

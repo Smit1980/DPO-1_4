@@ -15,7 +15,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import shell  # noqa: E402
 import demos  # noqa: E402
 import prompts as P  # noqa: E402
-from lib import EXTRA_CSS_V4, img_name, SLIDES, pair_banner, table  # noqa: E402
+from lib import EXTRA_CSS_V4, EXTRA_CSS_V4_2, img_name, SLIDES, pair_banner, table, slide  # noqa: E402
+from content_practice import s12  # noqa: E402
+from content_hw import s13  # noqa: E402
 from content_p1 import P1_PLAN, pair1_sections  # noqa: E402
 from content_p2 import P2_PLAN, pair2_sections  # noqa: E402
 
@@ -30,12 +32,59 @@ SCRIPT = shell.SCRIPT.replace('feedback.textContent = (isCorrect ? "Верно. 
 assert "question.dataset.explain" in SCRIPT
 SCRIPT = SCRIPT.replace('const QUIZ_EXPLAIN = {', 'const QUIZ_EXPLAIN_UNUSED = {')
 
+COPY_JS = r"""/* Копирование промптов и блоков данных: полный текст (textContent), запасной путь через выделение */
+function copyPlain(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    return navigator.clipboard.writeText(text).catch(() => legacyCopy(text));
+  }
+  return legacyCopy(text);
+}
+function legacyCopy(text) {
+  return new Promise((resolve, reject) => {
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;left:-9999px;top:0;opacity:0";
+    document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, text.length);
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    ok ? resolve() : reject(new Error("copy failed"));
+  });
+}
+document.querySelectorAll(".data-block").forEach((blk, i) => {
+  if (blk.hidden) return;
+  if (!blk.id) blk.id = "db-auto-" + i;
+  const wrap = document.createElement("div"); wrap.className = "db-wrap";
+  blk.parentNode.insertBefore(wrap, blk); wrap.appendChild(blk);
+  const b = document.createElement("button"); b.type = "button"; b.className = "copy-btn"; b.dataset.copy = blk.id; b.textContent = "Копировать";
+  wrap.appendChild(b);
+});
+document.querySelectorAll("[data-copy]").forEach((button) => {
+  button.addEventListener("click", async () => {
+    const code = document.getElementById(button.dataset.copy);
+    if (!code) return;
+    const original = button.textContent;
+    const text = code.textContent.replace(/\r\n/g, "\n").replace(/^\n+|\s+$/g, "");
+    try { await copyPlain(text); button.textContent = "Скопировано"; }
+    catch (e) {
+      const range = document.createRange(); range.selectNodeContents(code);
+      const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+      button.textContent = "Выделено — нажмите Ctrl+C";
+    }
+    window.setTimeout(() => { button.textContent = original; }, 2200);
+  });
+});
+"""
+i0 = SCRIPT.index("/* Копирование промптов */")
+i1 = SCRIPT.index("/* Голосование во входном блоке")
+SCRIPT = SCRIPT[:i0] + COPY_JS + "\n" + SCRIPT[i1:]
 
-def prompt_box(p: dict) -> str:
+
+def prompt_box(p: dict, prefix: str = "prompt") -> str:
     pid = p["id"].lower()
+    desc = f'<p class="prompt-desc">{E(p["description"])}</p>' if p.get("description") else ""
     return (f'<div class="prompt-box fade"><div class="prompt-head"><span>{p["id"]} · {E(p["title"])}</span>'
-            f'<button type="button" class="copy-btn" data-copy="prompt-{pid}">Копировать</button></div>'
-            f'<p class="prompt-desc">{E(p["description"])}</p><pre id="prompt-{pid}">{E(p["content"])}</pre></div>')
+            f'<button type="button" class="copy-btn" data-copy="{prefix}-{pid}">Копировать</button></div>'
+            f'{desc}<pre id="{prefix}-{pid}">{E(p["content"])}</pre></div>')
 
 
 SHORT = {'s1':'Файл','s2':'Метаданные','s3':'Обезличивание','s4':'Условные данные','s5':'История и настройки','s6':'Паспорт задачи',
@@ -48,10 +97,11 @@ NAV = ('<nav class="top" aria-label="Навигация по странице">'
        + "".join(f'<a class="nav-link" href="#{a}">{SHORT[a]}</a>' for _, t, a in P1_PLAN)
        + '<span class="nav-sep"></span><a class="nav-link" href="#pair2">Пара 2</a>'
        + "".join(f'<a class="nav-link" href="#{a}">{SHORT[a]}</a>' for _, t, a in P2_PLAN)
-       + '<span class="nav-sep"></span><a class="nav-link" href="#dl">Файлы</a><a class="nav-link" href="#checklist">Чек-лист</a>'
-         '<a class="nav-link" href="#quiz">Квиз</a></nav>')
+       + '<span class="nav-sep"></span><a class="nav-link" href="#s12">Практикум</a><a class="nav-link" href="#dl">Файлы</a><a class="nav-link" href="#checklist">Чек-лист</a>'
+         '<a class="nav-link" href="#quiz">Квиз</a><a class="nav-link" href="#s13">ДЗ и промпты</a></nav>')
 
 HERO = f"""<header id="hero">
+  {slide(0, "Слайд «Подготовка информации для работы с ИИ. Правовые и репутационные риски применения ИИ»: четыре блока — подготовьте данные, работа с ИИ, проверьте результат, учитывайте риски; внизу — ответственное использование ИИ", ["Это обзорный слайд всего урока, на нём одна схема: слева <b>подготовьте данные</b> (цель и контекст, только необходимая информация, структурированный формат, ограничения, проверка на конфиденциальность), в центре <b>работа с ИИ</b> (ваш запрос → ИИ → результат-черновик, с уточнением и повтором), справа <b>проверьте результат</b> (соответствие цели, факты и источники, правовые риски, предвзятость, безопасность использования) и <b>учитывайте риски</b> (правовые, репутационные, информационной безопасности, этические). Внизу — четыре правила ответственного использования: думайте о последствиях, соблюдайте правила, проверяйте результат, используйте ответственно.", "Возвращайтесь к этому слайду в начале и в конце занятия: пара 1 отвечает на левую часть схемы, пара 2 — на правую."], takeaway="Ответственное использование ИИ — залог вашей репутации.")}
   <div class="hero-badges">
     <span class="hero-badge">ДПО-1 · Темы 2 и 3</span>
     <span class="hero-badge">Две пары · 2 × 90 минут</span>
@@ -86,14 +136,18 @@ DL = """<section class="sec" id="dl">
     <p class="sec-desc">Учебные файлы для практик и памятки. Все данные в файлах вымышлены. Памятки не заменяют политику информационной безопасности Концерна ВКО «Алмаз – Антей» и локальные акты предприятия.</p>
   </div>
   <div class="dl-grid fade">
+    <a class="dl" href="../data/urok4/pamyatka_obezlichivanie_dipfeyki_kak_ne_popast.xlsx" download><span class="ico">📊</span><div><b>Excel-памятка · обезличивание, подделки и дипфейки, как не попасть</b><span>XLSX · 7 листов с цветовой разметкой: принципы, каталог подделок, «не делайте / делайте», реальные случаи, чек-лист</span></div><span class="arrow">↓</span></a>
+    <a class="dl" href="../data/urok4/slaydy_urok4.pptx" download><span class="ico">🖼️</span><div><b>Презентация урока · PPTX</b><span>24 слайда в порядке показа: 00, 21, 1–10, 22, 11–20, 23</span></div><span class="arrow">↓</span></a>
+    <a class="dl" href="../data/urok4/slaydy_urok4.pdf" download><span class="ico">📑</span><div><b>Презентация урока · PDF</b><span>Те же слайды для печати и раздачи</span></div><span class="arrow">↓</span></a>
     <a class="dl" href="../data/urok4/pamyatka_1_pered_otpravkoy_v_ii.pdf" download><span class="ico">🚦</span><div><b>Памятка 1 · Перед отправкой в ИИ</b><span>PDF · пять вопросов, четыре приёма, метаданные, если данные уже ушли</span></div><span class="arrow">↓</span></a>
     <a class="dl" href="../data/urok4/pamyatka_2_proverka_rezultata_ii.pdf" download><span class="ico">✅</span><div><b>Памятка 2 · Проверка результата ИИ</b><span>PDF · пять проверок, проверка факта, тест «поменяй деталь», проверка поручения</span></div><span class="arrow">↓</span></a>
     <a class="dl" href="../data/urok4/pasport_bezopasnoy_zadachi.docx" download><span class="ico">📋</span><div><b>Паспорт безопасной задачи</b><span>DOCX · бланк и заполненный образец</span></div><span class="arrow">↓</span></a>
-    <a class="dl" href="../data/urok4/prompty_urok4.docx" download><span class="ico">⌨️</span><div><b>Промпты урока 4</b><span>DOCX · десять шаблонов: письмо, записка, проверка, роль</span></div><span class="arrow">↓</span></a>
+    <a class="dl" href="../data/urok4/prompty_urok4.docx" download><span class="ico">⌨️</span><div><b>Промпты урока 4</b><span>DOCX · 20 шаблонов и 8 промптов практикума: письмо, записка, проверка, роль</span></div><span class="arrow">↓</span></a>
   </div>
   <div class="dl-grid fade">
     <a class="dl" href="../data/urok4/zayavka_uchebnaya_s_metadannymi.docx" download><span class="ico">📝</span><div><b>zayavka_uchebnaya_s_metadannymi.docx</b><span>Для практики 2: скрытое внутри файла</span></div><span class="arrow">↓</span></a>
     <a class="dl" href="../data/urok4/zhurnal_zayavok_uchebnyj.xlsx" download><span class="ico">📊</span><div><b>zhurnal_zayavok_uchebnyj.xlsx</b><span>Для практики 3: журнал заявок, в файле есть скрытый лист</span></div><span class="arrow">↓</span></a>
+    <a class="dl" href="../data/urok4/zhurnal_zayavok_50_uchebnyj.xlsx" download><span class="ico">🗂️</span><div><b>zhurnal_zayavok_50_uchebnyj.xlsx</b><span>Практика 3б: журнал на 50 строк с «ловушкой» — найдите скрытую инструкцию для ИИ</span></div><span class="arrow">↓</span></a>
     <a class="dl" href="../data/urok4/zhurnal_zayavok_bezopasnyj.csv" download><span class="ico">🧾</span><div><b>zhurnal_zayavok_bezopasnyj.csv</b><span>Образец безопасной таблицы (ключ практики 3)</span></div><span class="arrow">↓</span></a>
     <a class="dl" href="../data/urok4/foto_uchebnoe_s_exif.jpg" download><span class="ico">📷</span><div><b>foto_uchebnoe_s_exif.jpg</b><span>Учебное фото со скрытыми данными съёмки (EXIF)</span></div><span class="arrow">↓</span></a>
     <a class="dl" href="../data/urok4/prompty_urok4.txt" download><span class="ico">📄</span><div><b>prompty_urok4.txt</b><span>Те же промпты одним текстом</span></div><span class="arrow">↓</span></a>
@@ -192,6 +246,7 @@ HEAD = f"""<!DOCTYPE html>
 def expand_prompts(body: str) -> str:
     for pid, p in P.PROMPT_BY_ID.items():
         body = body.replace(f"{{{{PROMPT:{pid}}}}}", prompt_box(p))
+        body = body.replace(f"{{{{PK:{pid}}}}}", prompt_box(p, "pk"))
     left = re.findall(r"\{\{[^}]+\}\}", body)
     if left:
         raise SystemExit("нераскрытые плейсхолдеры: " + ", ".join(left))
@@ -200,8 +255,16 @@ def expand_prompts(body: str) -> str:
 
 def main() -> None:
     demos.build_all()
-    body = (NAV + HERO + "<main>" + PAIR1 + pair1_sections() + PAIR_END + PAIR2 + pair2_sections()
-            + DL + checklist() + quiz() + "</main>")
+    open_slide = slide(21, "Слайд «Подготовьте данные до запроса, проверьте результат после»: цепочка из шести шагов — задача, роль ИИ, подготовка информации, результат ИИ, проверка рисков, решение человека; пара 1 — что можно передать ИИ, пара 2 — что делать с результатом",
+                       ["Слайд задаёт логику всего занятия. Шесть карточек — это путь любой задачи с ИИ: <b>задача</b> → <b>роль ИИ</b> → <b>подготовка информации</b> → <b>результат ИИ</b> → <b>проверка рисков</b> → <b>решение человека</b>. Две карточки выделены цветом, потому что это точки контроля: подготовка информации (мы отвечаем за то, что уходит) и решение человека (мы отвечаем за то, что используется).",
+                        "Пара 1 отвечает на вопрос «что можно передать ИИ?» и охватывает первые три карточки. Пара 2 отвечает на вопрос «что делать с результатом?» и охватывает последние три."],
+                       takeaway="Цель — не запретить ИИ, а использовать его ответственно.")
+    pair2_slide = slide(22, "Слайд «Пара 2: можно ли использовать результат ИИ?»: итог пары 1 в одной строке; шкала времени из пяти блоков — авторское право 0–18, недостоверные сведения 18–38, предвзятость 38–56, дипфейки 56–76, ответственность 76–90; три живых показа в GigaChat, DeepSeek и ChatGPT",
+                         ["Первая пара закрыта: минимум данных, обезличивание, настройки, паспорт задачи. Вторая пара начинается с главного вопроса: <b>можно ли использовать результат ИИ?</b> Слайд показывает структуру пары по минутам: авторское право (0–18), недостоверные сведения (18–38), предвзятость (38–56), дипфейки (56–76), ответственность (76–90).",
+                          "В каждой части — реальные случаи, практика и интерактив. Два живых показа пары проходят в трёх моделях: справка с выдуманными источниками и рекомендация о людях."],
+                         takeaway="Результат ИИ → риск → проверка → действие человека → решение.")
+    body = (NAV + HERO + "<main>" + open_slide + PAIR1 + pair1_sections() + PAIR_END + PAIR2 + pair2_slide + pair2_sections()
+            + s12() + DL + checklist() + quiz() + s13() + "</main>")
     body = expand_prompts(body)
     css = (TOOLS / "base_style.css").read_text(encoding="utf-8")
     tail = shell.TAIL_TMPL
@@ -210,7 +273,7 @@ def main() -> None:
         "<p style=\"margin-top:6px\">Все данные на странице и в файлах вымышлены. Источники проверены по открытым материалам 21.09.2026; правила сервисов и нормы могут измениться — сверяйте актуальную редакцию.</p>"
         "<p style=\"margin-top:6px\">Учебный материал не заменяет политику информационной безопасности Концерна ВКО «Алмаз – Антей» и локальные акты предприятия и не является юридическим заключением.</p></footer>"),
         tail, flags=re.S)
-    page = f"{HEAD}{css}{shell.EXTRA_CSS}{EXTRA_CSS_V4}</style>\n</head>\n<body>\n\n{body}\n{tail}\n<script>{SCRIPT}</script>\n</body>\n</html>\n"
+    page = f"{HEAD}{css}{shell.EXTRA_CSS}{EXTRA_CSS_V4}{EXTRA_CSS_V4_2}</style>\n</head>\n<body>\n\n{body}\n{tail}\n<script>{SCRIPT}</script>\n</body>\n</html>\n"
     OUT.write_text(page, encoding="utf-8")
     print("  ✓", OUT.relative_to(ROOT).as_posix(), f"{len(page) // 1024} КБ")
 

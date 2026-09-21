@@ -13,7 +13,7 @@ def main():
     DST.mkdir(parents=True, exist_ok=True)
     have = []
     for n in SLIDES:
-        src = SRC / f"{n}.png"
+        src = SRC / ("00.png" if n == 0 else f"{n}.png")
         if src.is_file():
             im = Image.open(src).convert("RGB")
             if im.width > 2000:
