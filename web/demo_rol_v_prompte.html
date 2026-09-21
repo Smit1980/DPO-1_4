@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Роль в промпте: угол зрения, а не знания и не право на данные</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+/* Тренажёр «Подбери роль» · уроки 3–4, блок 9 · задания совпадают с Docs/prompty_razdela.md */
+.case{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px}
+.case + .case{margin-top:12px}
+.case .title{display:flex;gap:10px;align-items:baseline;font-weight:800;font-size:.97rem}
+.case .title .n{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--indigo-lt);color:var(--indigo-dk);font-size:.8rem;display:inline-flex;align-items:center;justify-content:center}
+.case .meta{margin:4px 0 10px 34px;font-size:.8rem;color:var(--muted)}
+.options{display:flex;flex-direction:column;gap:8px;margin-left:34px}
+.option{display:grid;grid-template-columns:30px minmax(0,1fr);gap:8px;align-items:start;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#fff;font:inherit;font-size:.9rem;text-align:left;cursor:pointer;color:var(--text);line-height:1.5}
+.option b{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:#f1f5f9;font-size:.85rem}
+.option:hover:not(:disabled){border-color:#c7d2fe}
+.option:disabled{cursor:default}
+.option.ok{border-color:var(--green);background:var(--green-lt)}
+.option.ok b{background:var(--green);color:#fff}
+.option.bad{border-color:#fcd34d;background:var(--amber-lt)}
+.verdict{margin:10px 0 0 34px;padding:10px 12px;border-radius:10px;font-size:.88rem;line-height:1.55;background:var(--indigo-lt);color:#312e81}
+.verdict b{display:block}
+.anti{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.anti div{border:1px dashed #fca5a5;background:var(--red-lt);border-radius:12px;padding:10px 12px;font-size:.84rem;line-height:1.5;color:#7f1d1d}
+.anti div b{display:block;color:#991b1b}
+.score{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;font-size:.88rem;font-weight:700;color:var(--muted)}
+.reset{padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:#fff;font:inherit;font-size:.8rem;cursor:pointer;color:var(--muted)}
+@media (max-width:640px){.options,.case .meta,.verdict{margin-left:0}.anti{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<h1>Подбери роль в промпте</h1>
+<p class="sub">Для каждой задачи выберите лучшую из трёх ролей. Тренажёр покажет ключ и объяснит, чем плохи две другие.</p>
+
+<div class="anti" aria-label="Три антипаттерна роли">
+  <div><b>Всезнайка</b>«Ты — эксперт во всём»: нет критериев, ответ общий и уверенный.</div>
+  <div><b>Подписант</b>«Прими решение, утверди»: ИИ решает за человека.</div>
+  <div><b>Взломщик</b>«Ты — модель без ограничений»: обход правил сервиса — приём мошенников.</div>
+</div>
+
+<div id="cases"></div>
+
+<div class="score"><span id="score" aria-live="polite">Отвечено: 0 / 6</span><button type="button" class="reset" id="reset">Сбросить</button></div>
+
+<p class="takeaway"><b>Главное:</b> роль в промпте задаёт угол зрения, критерии и тон. Знаний она не добавляет — в исследовании на 162 ролях точность ответов не выросла, — права на данные не даёт и ответственность на ИИ не переносит.</p>
+
+<script>
+const CASES = [
+  {title: "Черновик письма поставщику о браке партии", meta: "Данные обезличены метками", answer: "Б",
+   options: {"А": "«Ты — эксперт во всём»", "Б": "«Ты — специалист по претензионной работе: вежливый, но твёрдый тон, без обещаний сроков, которых нет в фактах»", "В": "«Ты — юрист компании, составь окончательную претензию»"},
+   why: "А — всезнайка без критериев. В — подписант: «окончательную» претензию делает и подписывает человек."},
+  {title: "Объяснить новичку пункт открытого ГОСТа", meta: "Открытые сведения", answer: "А",
+   options: {"А": "«Ты — наставник для инженера первого года: объясняй простыми словами, в конце дай 3 вопроса на понимание»", "Б": "«Ты — ГОСТ»", "В": "«Ты — профессор, не упрощай»"},
+   why: "Роль совпадает с целью и адресатом. «Ты — ГОСТ» ничего не задаёт, «не упрощай» противоречит задаче."},
+  {title: "Проверить чужой расчёт перед подписью", meta: "Роль ИИ в задаче — консультант (урок 2)", answer: "Б",
+   options: {"А": "«Ты — расчётчик, пересчитай и скажи, верно ли»", "Б": "«Ты — опытный проверяющий: составь чек-лист, что проверить в расчёте, сам не считай и не делай вывод о прочности»", "В": "«Ты — главный конструктор, утверди расчёт»"},
+   why: "А и В выводят ИИ из роли консультанта: считать и утверждать при высокой цене ошибки должен специалист."},
+  {title: "Найти слабые места в своём черновике доклада", meta: "Черновик без реальных сведений", answer: "А",
+   options: {"А": "«Ты — придирчивый оппонент на защите: 5 самых слабых мест и вопросы, которые зададут; факты не придумывай»", "Б": "«Ты — мой друг, похвали»", "В": "«Ты — эксперт, перепиши доклад целиком»"},
+   why: "Роль оппонента даёт критерии критики. «Похвали» бесполезно, «перепиши целиком» подменяет вашу работу."},
+  {title: "Разобрать подозрительное письмо «от службы ИБ»", meta: "Ссылки и контакты заменены метками", answer: "А",
+   options: {"А": "«Ты — тренер по кибергигиене: признаки манипуляции и как проверить отправителя другим каналом»", "Б": "«Ты — сотрудник нашей ИБ, реши, фишинг ли это»", "В": "«Ты — хакер, объясни, как написать такое же письмо»"},
+   why: "Б — ИИ не знает вашей службы ИБ и не может решать за неё. В — не нужно для задачи и нарушает правила сервиса."},
+  {title: "Шаблон протокола совещания", meta: "Реальные заметки секретаря содержат ФИО и решения", answer: "Б",
+   options: {"А": "«Ты — секретарь, заполни протокол по заметкам» — и вставить заметки", "Б": "«Ты — специалист по документационному обеспечению: сделай шаблон протокола с полями в скобках и подсказками»", "В": "«Ты — председатель совещания»"},
+   why: "А требует отправить реальные заметки — роль не делает их разрешёнными. Шаблон заполняется у себя."},
+];
+let answered = 0;
+
+function render() {
+  answered = 0;
+  const box = document.getElementById("cases");
+  box.innerHTML = "";
+  CASES.forEach((item, index) => {
+    const card = document.createElement("div");
+    card.className = "case";
+    card.innerHTML = `<div class="title"><span class="n">${index + 1}</span><span></span></div><div class="meta"></div><div class="options"></div><div class="verdict" hidden aria-live="polite"></div>`;
+    card.querySelector(".title span:last-child").textContent = item.title;
+    card.querySelector(".meta").textContent = item.meta;
+    const options = card.querySelector(".options");
+    Object.entries(item.options).forEach(([letter, text]) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "option";
+      button.dataset.letter = letter;
+      button.innerHTML = `<b>${letter}</b><span></span>`;
+      button.querySelector("span").textContent = text;
+      button.addEventListener("click", () => {
+        options.querySelectorAll(".option").forEach((b) => {
+          b.disabled = true;
+          if (b.dataset.letter === item.answer) b.classList.add("ok");
+          else if (b === button) b.classList.add("bad");
+        });
+        const verdict = card.querySelector(".verdict");
+        verdict.hidden = false;
+        verdict.innerHTML = `<b>${letter === item.answer ? "Совпало с ключом" : "Ключ: " + item.answer}</b>`;
+        verdict.append(item.why);
+        answered += 1;
+        document.getElementById("score").textContent = `Отвечено: ${answered} / ${CASES.length}`;
+      });
+      options.appendChild(button);
+    });
+    box.appendChild(card);
+  });
+  document.getElementById("score").textContent = `Отвечено: 0 / ${CASES.length}`;
+}
+document.getElementById("reset").addEventListener("click", render);
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Учебный обезличиватель: метки у себя, до отправки в нейросеть</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+/* Учебный обезличиватель · уроки 3–4 · работает только в браузере: в коде нет ни одного сетевого запроса */
+.steps{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.step{padding:7px 14px;border-radius:10px;border:1px solid var(--border);background:#fff;font:inherit;font-size:.84rem;font-weight:800;color:var(--muted);cursor:pointer}
+.step.active{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.local{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;background:var(--green-lt);color:#065f46;font-size:.78rem;font-weight:800;margin-bottom:10px}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:start}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}}
+textarea{min-height:210px;font-size:.92rem}
+textarea[readonly]{background:#f8fafc}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.btn{padding:9px 16px;border-radius:9px;border:1px solid var(--indigo);background:var(--indigo);color:#fff;font:inherit;font-weight:800;font-size:.85rem;cursor:pointer}
+.btn.ghost{background:#fff;color:var(--indigo-dk);border-color:#c7d2fe}
+.found{display:flex;flex-direction:column;gap:6px;max-height:260px;overflow:auto;border:1px solid var(--border);border-radius:12px;padding:10px}
+.found label{display:grid;grid-template-columns:18px minmax(0,1fr) auto;gap:8px;align-items:center;font-size:.86rem;padding:5px 6px;border-radius:8px}
+.found label:hover{background:#f8fafc}
+.found .val{word-break:break-word}
+.found .tag{font-family:Consolas,monospace;font-size:.78rem;color:var(--indigo-dk);background:var(--indigo-lt);border-radius:6px;padding:1px 6px;white-space:nowrap}
+.addrow{display:grid;grid-template-columns:minmax(0,1fr) 150px auto;gap:8px;margin-top:10px}
+@media (max-width:560px){.addrow{grid-template-columns:1fr}}
+select{font:inherit;font-size:.88rem;padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:#fff}
+.map{width:100%;border-collapse:collapse;font-size:.84rem;margin-top:8px}
+.map th{text-align:left;background:var(--indigo-lt);color:var(--indigo-dk);padding:6px 8px}
+.map td{border-top:1px solid var(--border);padding:6px 8px;word-break:break-word}
+.map td:first-child{font-family:Consolas,monospace;color:var(--indigo-dk);white-space:nowrap}
+.warn{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--amber-lt);border:1px solid #fcd34d;color:#78350f;font-size:.88rem;line-height:1.6}
+.status{font-size:.84rem;font-weight:700;color:var(--muted)}
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<h1>Учебный обезличиватель</h1>
+<p class="sub">Шаг 1 — найти, что выдаёт людей и организацию. Шаг 2 — заменить на метки и скопировать безопасный текст в нейросеть. Шаг 3 — вернуть реальные значения в ответ ИИ у себя.</p>
+<span class="local">🔒 Текст не покидает ваш браузер — в демо нет ни одного сетевого запроса</span>
+
+<div class="steps" role="tablist" aria-label="Шаги">
+  <button type="button" class="step active" data-step="1" role="tab" aria-selected="true">1 · Найти</button>
+  <button type="button" class="step" data-step="2" role="tab" aria-selected="false">2 · Заменить на метки</button>
+  <button type="button" class="step" data-step="3" role="tab" aria-selected="false">3 · Вернуть значения</button>
+</div>
+
+<section id="step-1">
+  <div class="grid2">
+    <div>
+      <label class="field-label" for="src">Исходный текст — учебный пример</label>
+      <textarea id="src"></textarea>
+      <div class="btnrow">
+        <button type="button" class="btn" id="find">Найти автоматически</button>
+        <button type="button" class="btn ghost" id="preset">Вернуть пример</button>
+      </div>
+    </div>
+    <div>
+      <span class="field-label">Найдено — снимите галочку, если значение нужно ИИ</span>
+      <div class="found" id="found" aria-live="polite"><span class="status">Нажмите «Найти автоматически».</span></div>
+      <div class="addrow">
+        <input type="text" id="add-text" placeholder="Добавить своё: слово или фразу из текста" aria-label="Фраза для замены">
+        <select id="add-cat" aria-label="Тип метки">
+          <option value="ОБЪЕКТ">ОБЪЕКТ</option><option value="ИЗДЕЛИЕ">ИЗДЕЛИЕ</option><option value="СОТРУДНИК">СОТРУДНИК</option><option value="ОРГАНИЗАЦИЯ">ОРГАНИЗАЦИЯ</option><option value="ДЕТАЛЬ">ДЕТАЛЬ</option><option value="ЧИСЛО">ЧИСЛО</option>
+        </select>
+        <button type="button" class="btn ghost" id="add">Добавить</button>
+      </div>
+    </div>
+  </div>
+  <div class="warn"><b>Что автоматика не видит.</b> Уникальные детали («единственный в отрасли стенд…»), должности, названия объектов и цехов без номера, характеристики изделий словами. Прочитайте текст глазами и добавьте такие фрагменты вручную — или удалите их совсем.</div>
+</section>
+
+<section id="step-2" class="hidden">
+  <div class="grid2">
+    <div>
+      <label class="field-label" for="safe">Безопасный текст — его можно отправить</label>
+      <textarea id="safe" readonly></textarea>
+      <div class="btnrow"><button type="button" class="btn" id="copy-safe">Копировать</button><span class="status" id="copy-status" aria-live="polite"></span></div>
+    </div>
+    <div>
+      <span class="field-label">Таблица соответствия — остаётся только у вас</span>
+      <table class="map"><thead><tr><th>Метка</th><th>Значение</th></tr></thead><tbody id="map"></tbody></table>
+    </div>
+  </div>
+</section>
+
+<section id="step-3" class="hidden">
+  <div class="grid2">
+    <div>
+      <label class="field-label" for="ai">Ответ ИИ с метками — вставьте сюда</label>
+      <textarea id="ai"></textarea>
+      <div class="btnrow"><button type="button" class="btn" id="restore">Подставить значения</button></div>
+    </div>
+    <div>
+      <label class="field-label" for="restored">Текст с реальными значениями — у вас, не в чате</label>
+      <textarea id="restored" readonly></textarea>
+      <p class="status" id="restore-status" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<p class="takeaway"><b>Главное:</b> обезличиваем у себя и до отправки — таблица соответствия остаётся у вас. Автоматика находит очевидное, но уникальные детали видит только человек. Для рабочих документов используйте инструменты, разрешённые в организации.</p>
+
+<script>
+const PRESET = `УЧЕБНЫЙ ПРИМЕР · данные вымышлены
+Начальнику отдела закупок Гаврилову С. П.
+от инженера ОТК цеха № 5 Сидоренко И. В.
+
+Служебная записка № 214/ОТК от 11.09.2026.
+При входном контроле партии блоков питания БП-12 по договору № 45/2026-П с ООО «Поставщик-Альфа» выявлено 14 несоответствующих изделий из 200. Испытания проводились на стенде, единственном в отрасли стенде вибрационных испытаний такого класса.
+Представитель поставщика — Смирнова Е. А., тел. +7 900 000-00-17, e.smirnova@alfa.test.
+Прошу подготовить претензию с требованием замены в срок до 30.09.2026.`;
+
+/* Пример ответа ИИ собирается из фактических меток шага 2. Последняя строка — типичная ошибка:
+   модель «укоротила» метку, и обратная подстановка её не найдёт. */
+function aiPreset() {
+  const label = (test, fallback) => (mapping.find((row) => test(row.value)) || {label: fallback}).label;
+  return `Уважаемые коллеги из ${label((v) => v.startsWith("ООО"), "[ОРГАНИЗАЦИЯ_1]")}!
+По договору ${label((v) => v.includes("45/2026"), "[НОМЕР_2]")} при входном контроле партии ${label((v) => v.includes("БП-12"), "[ИЗДЕЛИЕ_1]")} выявлено ${label((v) => v === "14", "[ЧИСЛО_1]")} несоответствующих изделий из ${label((v) => v === "200", "[ЧИСЛО_2]")}.
+Просим заменить их в срок до ${label((v) => v === "30.09.2026", "[ДАТА_2]")}.
+С уважением, [СОТРУДНИК]`;
+}
+
+const RULES = [
+  {cat: "ПОЧТА", re: /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g},
+  {cat: "ТЕЛЕФОН", re: /(?:\+7|8)[\s(-]*\d{3}[\s)-]*\d{3}[\s-]*\d{2}[\s-]*\d{2}/g},
+  {cat: "ОРГАНИЗАЦИЯ", re: /(?:ООО|АО|ПАО|ЗАО|ОАО|ФГУП|ИП)\s+«[^»]+»/g},
+  {cat: "СОТРУДНИК", re: /[А-ЯЁ][а-яё]{2,}\s+[А-ЯЁ]\.\s?[А-ЯЁ]\./g},
+  {cat: "СОТРУДНИК", re: /[А-ЯЁ]\.\s?[А-ЯЁ]\.\s?[А-ЯЁ][а-яё]{2,}/g},
+  {cat: "НОМЕР", re: /№\s?[\wА-Яа-я/.-]*\d[\wА-Яа-я/.-]*/g},
+  {cat: "ДАТА", re: /\b\d{2}\.\d{2}\.\d{4}\b/g},
+  {cat: "ИЗДЕЛИЕ", re: /(?<![\wА-Яа-я])[А-ЯA-Z]{1,4}-\d{1,4}[А-ЯA-Z]?(?![\wА-Яа-я])/g},
+  {cat: "ЧИСЛО", re: /\b\d+(?=\s+(?:несоответствующих|изделий|шт))/g},
+  {cat: "ЧИСЛО", re: /(?<=из\s)\d+\b/g},
+];
+
+let items = [];   // {value, cat, on}
+let mapping = []; // {label, value}
+
+const $ = (id) => document.getElementById(id);
+$("src").value = PRESET;
+$("ai").addEventListener("input", () => { $("ai").dataset.touched = "yes"; });
+
+function detect() {
+  const text = $("src").value;
+  const seen = new Map();
+  const spans = [];
+  RULES.forEach((rule) => {
+    for (const m of text.matchAll(rule.re)) {
+      const start = m.index, end = m.index + m[0].length;
+      if (spans.some((s) => start < s.end && end > s.start)) continue; // уже покрыто более точным правилом
+      spans.push({start, end});
+      const value = m[0].trim();
+      if (!seen.has(value)) seen.set(value, rule.cat);
+    }
+  });
+  items = [...seen].map(([value, cat]) => ({value, cat, on: true}));
+  renderFound();
+}
+
+function renderFound() {
+  const box = $("found");
+  if (!items.length) { box.innerHTML = '<span class="status">Ничего не найдено. Добавьте фрагменты вручную.</span>'; return; }
+  box.innerHTML = "";
+  items.forEach((item, i) => {
+    const label = document.createElement("label");
+    label.innerHTML = `<input type="checkbox" ${item.on ? "checked" : ""}><span class="val"></span><span class="tag">${item.cat}</span>`;
+    label.querySelector(".val").textContent = item.value;
+    label.querySelector("input").addEventListener("change", (e) => { items[i].on = e.target.checked; });
+    box.appendChild(label);
+  });
+  const status = document.createElement("span");
+  status.className = "status";
+  status.textContent = `Найдено: ${items.length}. Проверьте глазами, что пропущено.`;
+  box.appendChild(status);
+}
+
+function escapeRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+
+function anonymize() {
+  const source = $("src").value;
+  const counters = {};
+  mapping = [];
+  /* Номера меток — по порядку появления в тексте; заменяем от длинных значений к коротким */
+  const firstIndex = (value) => {
+    const match = new RegExp(/^\d+$/.test(value) ? `(?<![\\d_])${value}(?!\\d)` : escapeRe(value)).exec(source);
+    return match ? match.index : -1;
+  };
+  items.filter((i) => i.on && firstIndex(i.value) >= 0)
+    .sort((a, b) => firstIndex(a.value) - firstIndex(b.value))
+    .forEach((item) => {
+      counters[item.cat] = (counters[item.cat] || 0) + 1;
+      mapping.push({label: `[${item.cat}_${counters[item.cat]}]`, value: item.value});
+    });
+  let text = source;
+  [...mapping].sort((a, b) => b.value.length - a.value.length).forEach((row) => {
+    /* Чистое число заменяем только целиком: «14» не должно съесть часть «214» */
+    const pattern = /^\d+$/.test(row.value) ? `(?<![\\d_])${row.value}(?!\\d)` : escapeRe(row.value);
+    text = text.replace(new RegExp(pattern, "g"), row.label);
+  });
+  if ($("ai").dataset.touched !== "yes") $("ai").value = aiPreset();
+  $("safe").value = text;
+  const body = $("map");
+  body.innerHTML = "";
+  mapping.forEach((row) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td></td><td></td>";
+    tr.children[0].textContent = row.label;
+    tr.children[1].textContent = row.value;
+    body.appendChild(tr);
+  });
+}
+
+function restore() {
+  let text = $("ai").value;
+  let used = 0;
+  const unknown = new Set((text.match(/\[[А-ЯЁA-Z]+(?:_\d+)?\]/g) || []));
+  mapping.forEach((row) => {
+    if (text.includes(row.label)) { used += 1; unknown.delete(row.label); }
+    text = text.split(row.label).join(row.value);
+  });
+  $("restored").value = text;
+  $("restore-status").textContent = mapping.length
+    ? `Подставлено меток: ${used}.` + (unknown.size ? ` Не найдено в таблице: ${[...unknown].join(", ")} — ИИ мог изменить метку, проверьте.` : "")
+    : "Сначала выполните шаги 1 и 2 — таблица соответствия пуста.";
+}
+
+function showStep(n) {
+  document.querySelectorAll(".step").forEach((b) => { const on = b.dataset.step === String(n); b.classList.toggle("active", on); b.setAttribute("aria-selected", String(on)); });
+  [1, 2, 3].forEach((k) => $(`step-${k}`).classList.toggle("hidden", k !== n));
+  if (n === 2 || (n === 3 && !mapping.length)) { if (!items.length) detect(); anonymize(); }
+}
+
+document.querySelectorAll(".step").forEach((b) => b.addEventListener("click", () => showStep(Number(b.dataset.step))));
+$("find").addEventListener("click", detect);
+$("preset").addEventListener("click", () => { $("src").value = PRESET; detect(); });
+$("add").addEventListener("click", () => {
+  const value = $("add-text").value.trim();
+  if (!value) return;
+  if (!items.some((i) => i.value === value)) items.push({value, cat: $("add-cat").value, on: true});
+  $("add-text").value = "";
+  renderFound();
+});
+$("copy-safe").addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText($("safe").value); $("copy-status").textContent = "Скопировано"; }
+  catch { $("safe").select(); $("copy-status").textContent = "Выделено — нажмите Ctrl + C"; }
+});
+$("restore").addEventListener("click", restore);
+detect();
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Что скрыто внутри файла Word</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+/* Учебное окно документа · все данные вымышлены */
+.win{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff}
+.win-bar{display:flex;align-items:center;gap:10px;padding:8px 12px;background:#2b579a;color:#fff;font-size:.82rem;font-weight:700}
+.win-bar span:first-child{background:#fff;color:#2b579a;border-radius:4px;padding:0 6px;font-weight:900}
+.fname{font-weight:600}
+.grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:14px;padding:14px;background:#e8ecf3}
+.page{background:#fff;border-radius:6px;padding:20px 22px;box-shadow:0 1px 6px rgba(15,23,42,.15);position:relative;font-size:.92rem;line-height:1.6}
+.page h3{font-size:1rem;margin-bottom:8px}
+.hot{position:absolute;display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;border:2px solid #fff;background:var(--indigo);color:#fff;font-weight:900;font-size:.8rem;cursor:pointer;box-shadow:0 1px 5px rgba(0,0,0,.35)}
+.hot.found{background:var(--green)}
+.hot.cur{outline:3px solid #fde68a}
+.hot:focus-visible{outline:3px solid #fbbf24}
+.hidden-txt{background:repeating-linear-gradient(45deg,#fef3c7,#fef3c7 6px,#fff 6px,#fff 12px);padding:2px 6px;border-radius:4px}
+.comment{position:relative;margin-top:12px;width:62%;background:#fff7d6;border:1px solid #f5d76e;border-radius:6px;padding:6px 8px;font-size:.72rem;line-height:1.4;color:#5b4b00}
+.hdr{font-size:.72rem;color:#64748b;border-bottom:1px dashed #cbd5e1;padding-bottom:4px;margin-bottom:10px}
+.info{background:#fff;border-radius:10px;padding:14px 16px;font-size:.9rem;line-height:1.6;min-height:210px}
+.info h2{font-size:.95rem;margin-bottom:6px}
+.info .where,.info .fix{margin-top:8px;padding:7px 10px;border-radius:8px;font-size:.84rem}
+.info .where{background:var(--cyan-lt);color:#0c4a6e}
+.info .fix{background:var(--green-lt);color:#065f46}
+.tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 14px;background:#f8fafc;border-top:1px solid var(--border)}
+.btn{padding:8px 14px;border-radius:10px;border:1px solid #c7d2fe;background:#fff;color:var(--indigo-dk);font:inherit;font-weight:800;font-size:.85rem;cursor:pointer}
+.btn.primary{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.count{font-weight:800;color:var(--muted);font-size:.86rem}
+.recv{margin-top:12px;padding:12px 16px;border-radius:12px;background:var(--red-lt);color:#7f1d1d;font-size:.88rem;line-height:1.7}
+.recv b{display:block;margin-bottom:4px}
+.recv ul{padding-left:18px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.comment{width:auto}}
+</style>
+</head>
+<body>
+<h1>Что скрыто внутри файла Word</h1>
+<p class="sub">На листе — обычное письмо без единой фамилии. Нажимайте на кружки: каждый показывает, что записано внутри файла и как это убрать. Данные вымышлены.</p>
+
+<div class="win">
+  <div class="win-bar"><span>W</span><span class="fname" id="fname">Договор_45-2026_Поставщик-Альфа_ЧЕРНОВИК_Комарова.docx</span></div>
+  <div class="grid">
+    <div class="page" id="page">
+      <div class="hdr">Для служебного пользования (учебный пример) · Проект ВН-2026/118</div>
+      <h3>Уведомление о переносе срока поставки</h3>
+      <p>Уважаемые партнёры! Сообщаем, что срок поставки по договору сдвигается на две недели. Просим подтвердить новую дату. <span class="hidden-txt">Скидку 7 % даём только при предоплате.</span></p>
+      <p style="margin-top:8px">С уважением, руководитель отдела закупок.</p>
+      <div class="comment">Цену не показывать, согласовать с Ершовым</div>
+      <button class="hot" style="left:6px;top:-14px" data-i="0" aria-label="Имя файла">1</button>
+      <button class="hot" style="right:-10px;top:-14px" data-i="1" aria-label="Свойства">2</button>
+      <button class="hot" style="left:calc(62% - 12px);bottom:22px" data-i="2" aria-label="Примечание">3</button>
+      <button class="hot" style="left:-10px;top:100px" data-i="3" aria-label="Скрытый текст">4</button>
+      <button class="hot" style="left:-10px;top:42px" data-i="4" aria-label="Колонтитул">5</button>
+      <button class="hot" style="right:-10px;bottom:-12px" data-i="5" aria-label="Исправления">6</button>
+    </div>
+    <div class="info" id="info" aria-live="polite"><h2>Нажмите на кружок</h2><p>На листе письма нет ни одной фамилии. Но внутри файла — шесть мест с лишними сведениями.</p></div>
+  </div>
+  <div class="tools">
+    <button type="button" class="btn primary" id="recv">Что увидит получатель</button>
+    <button type="button" class="btn" id="reset">Сбросить</button>
+    <span class="count" id="count">Найдено: 0 из 6</span>
+  </div>
+</div>
+<div class="recv" id="recvBox" hidden></div>
+
+<p class="takeaway"><b>Главное.</b> «В тексте нет фамилий» не значит «в файле нет фамилий». Надёжнее всего вставлять в запрос текст фрагмента; если нужен файл — работайте с копией и проверьте её Инспектором документов.</p>
+
+<script>
+const ITEMS = [
+  {t:"1 · Имя файла", w:"Видно в письме, в окне загрузки и в чате.", s:"В названии — контрагент («Поставщик-Альфа»), номер договора, слово ЧЕРНОВИК и фамилия автора (Комарова).", f:"Переименуйте перед отправкой: нейтральное имя без фамилий и номеров, например «Письмо_шаблон.docx»."},
+  {t:"2 · Свойства документа", w:"Файл → Сведения (правая колонка «Свойства»).", s:"Автор — Комарова Е.В.; последним сохранил — Ершов Н.К.; организация — «Учебное предприятие»; даты создания и изменения.", f:"Файл → Сведения → Поиск проблем → Инспектор документов → «Свойства документа и личные сведения» → Удалить всё. Делайте это на копии."},
+  {t:"3 · Примечание на полях", w:"Вкладка «Рецензирование» → «Показать примечания». В режиме печати примечание может не отображаться.", s:"«Цену не показывать, согласовать с Ершовым» — внутреннее указание, не предназначенное для адресата.", f:"Рецензирование → Удалить → Удалить все примечания в документе."},
+  {t:"4 · Скрытый текст", w:"Файл → Параметры → Экран → «Скрытый текст» (или Ctrl+A → Шрифт → «скрытый»).", s:"Строка «Скидку 7 % даём только при предоплате» не видна на печати, но остаётся в файле и читается при включённом показе.", f:"Инспектор документов → «Скрытый текст» → Удалить всё; либо удалить строку вручную."},
+  {t:"5 · Колонтитул", w:"Вставка → Колонтитулы (или двойной щелчок в верхней части страницы).", s:"«Для служебного пользования (учебный пример) · Проект ВН-2026/118» — гриф и внутренний номер проекта.", f:"Очистите колонтитул. Если гриф есть — документ вообще не для внешнего сервиса."},
+  {t:"6 · Исправления и история", w:"Рецензирование → Все исправления; Файл → Сведения → Журнал версий.", s:"Удалённые абзацы и имена тех, кто их правил, сохраняются, пока исправления не приняты или не отклонены.", f:"Рецензирование → Принять все изменения и прекратить отслеживание; затем Инспектор документов."}
+];
+const found = new Set();
+const $ = (id) => document.getElementById(id);
+function show(i) {
+  const it = ITEMS[i]; found.add(i);
+  $("info").innerHTML = `<h2>${it.t}</h2><p><b>Что внутри.</b> ${it.s}</p><div class="where"><b>Где смотреть.</b> ${it.w}</div><div class="fix"><b>Как убрать.</b> ${it.f}</div>`;
+  document.querySelectorAll(".hot").forEach((h) => { h.classList.toggle("found", found.has(+h.dataset.i)); h.classList.toggle("cur", +h.dataset.i === i); });
+  $("count").textContent = `Найдено: ${found.size} из 6`;
+}
+document.querySelectorAll(".hot").forEach((h) => h.addEventListener("click", () => show(+h.dataset.i)));
+$("recv").addEventListener("click", () => {
+  const b = $("recvBox"); b.hidden = false;
+  b.innerHTML = "<b>Вместе с файлом получатель получает:</b><ul>" + ITEMS.map((it) => `<li>${it.t.split(' · ')[1]}: ${it.s}</li>`).join("") + "</ul>";
+});
+$("reset").addEventListener("click", () => { found.clear(); $("recvBox").hidden = true; $("info").innerHTML = "<h2>Нажмите на кружок</h2><p>На листе письма нет ни одной фамилии. Но внутри файла — шесть мест с лишними сведениями.</p>"; document.querySelectorAll(".hot").forEach((h) => h.classList.remove("found", "cur")); $("count").textContent = "Найдено: 0 из 6"; });
+</script>
+</body>
+</html>

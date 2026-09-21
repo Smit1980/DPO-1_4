@@ -1,0 +1,11 @@
+# материалы преподавателя и черновики — не публикуются в репозитории слушателей
+_konspekt_out/
+tools/konspekt_data.py
+tools/build_konspekt.py
+tools/publish_konspekt.py
+Docs/private/
+slides/
+__pycache__/
+.omc/
+web/_shot.html
+assets/
