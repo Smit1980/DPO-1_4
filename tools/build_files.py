@@ -276,8 +276,6 @@ def build_zip() -> None:
     z = ROOT / "data" / "urok4_materialy.zip"
     with zipfile.ZipFile(z, "w", zipfile.ZIP_DEFLATED) as zf:
         for f in sorted(OUT.iterdir()):
-            if f.name.startswith("slaydy_"):
-                continue  # слайды — отдельными файлами (большой размер)
             zf.write(f, f.name)
     print("  ✓", z.name, len(list(OUT.iterdir())), "файлов")
 

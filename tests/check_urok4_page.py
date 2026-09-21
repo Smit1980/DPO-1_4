@@ -137,6 +137,15 @@ class Page(unittest.TestCase):
         self.assertIn("textContent", TEXT)
         self.assertIn("execCommand", TEXT)
 
+    def test_no_presentation_files(self):
+        self.assertNotIn("slaydy_urok4", TEXT)
+        self.assertEqual(list((ROOT / "data").rglob("*.pptx")) + list((ROOT / "data").rglob("slaydy*")), [])
+
+    def test_all_slide_images_exist(self):
+        from lib import SLIDES, img_name
+        for n in SLIDES:
+            self.assertTrue((ROOT / "png" / "urok4_podgotovka_i_riski" / img_name(n)).is_file(), n)
+
     def test_role_is_accented(self):
         self.assertIn("Указывайте роль в промпте", TEXT)
         self.assertIn("формат, тон и позицию", TEXT)

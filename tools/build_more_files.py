@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Дополнительные файлы урока 4: пакет промптов (docx/xlsx/csv/json), бланк ДЗ, журнал заявок 50 строк, слайды PDF и PPTX."""
+"""Дополнительные файлы урока 4: пакет промптов (docx/xlsx/csv/json), бланк ДЗ, журнал заявок 50 строк, ."""
 from __future__ import annotations
 
 import csv
@@ -198,7 +198,6 @@ def main() -> None:
     prompt_pack()
     hw_blank()
     journal50()
-    slides_pdf_pptx()
 
 
 if __name__ == "__main__":

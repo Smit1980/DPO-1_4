@@ -137,8 +137,6 @@ DL = """<section class="sec" id="dl">
   </div>
   <div class="dl-grid fade">
     <a class="dl" href="../data/urok4/pamyatka_obezlichivanie_dipfeyki_kak_ne_popast.xlsx" download><span class="ico">📊</span><div><b>Excel-памятка · обезличивание, подделки и дипфейки, как не попасть</b><span>XLSX · 7 листов с цветовой разметкой: принципы, каталог подделок, «не делайте / делайте», реальные случаи, чек-лист</span></div><span class="arrow">↓</span></a>
-    <a class="dl" href="../data/urok4/slaydy_urok4.pptx" download><span class="ico">🖼️</span><div><b>Презентация урока · PPTX</b><span>28 слайдов в порядке показа: 00, 21, 1–7, 27, 8–10, 22, 11–18, 24, 25, 19, 20, 23, 26</span></div><span class="arrow">↓</span></a>
-    <a class="dl" href="../data/urok4/slaydy_urok4.pdf" download><span class="ico">📑</span><div><b>Презентация урока · PDF</b><span>Те же слайды для печати и раздачи</span></div><span class="arrow">↓</span></a>
     <a class="dl" href="../data/urok4/pamyatka_1_pered_otpravkoy_v_ii.pdf" download><span class="ico">🚦</span><div><b>Памятка 1 · Перед отправкой в ИИ</b><span>PDF · пять вопросов, четыре приёма, метаданные, если данные уже ушли</span></div><span class="arrow">↓</span></a>
     <a class="dl" href="../data/urok4/pamyatka_2_proverka_rezultata_ii.pdf" download><span class="ico">✅</span><div><b>Памятка 2 · Проверка результата ИИ</b><span>PDF · пять проверок, проверка факта, тест «поменяй деталь», проверка поручения</span></div><span class="arrow">↓</span></a>
     <a class="dl" href="../data/urok4/pasport_bezopasnoy_zadachi.docx" download><span class="ico">📋</span><div><b>Паспорт безопасной задачи</b><span>DOCX · бланк и заполненный образец</span></div><span class="arrow">↓</span></a>
