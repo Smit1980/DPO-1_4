@@ -53,8 +53,8 @@ class Page(unittest.TestCase):
         self.assertLess(TEXT.index('id="u1"'), TEXT.index('id="u4"'))
         self.assertLess(TEXT.index('id="u4"'), TEXT.index('id="quiz"'))
 
-    def test_nine_slides_each_explained(self):
-        for n in range(0, 9):
+    def test_slides_each_explained(self):
+        for n in range(0, 19):
             self.assertIn(f'id="slide-{n:02d}"', TEXT)
             self.assertIn(f"Пояснение к слайду {n:02d}", TEXT)
         for im in [i for i in P_.imgs if i.get("src")]:
