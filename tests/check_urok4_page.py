@@ -120,7 +120,7 @@ class Page(unittest.TestCase):
             self.assertIn(f'id="prompt-{pid}"', TEXT)
         for pid in ("pr1", "pr2", "pr3", "pr4", "pr5", "pr6", "pr7", "prd"):
             self.assertIn(f'id="prompt-{pid}"', TEXT)
-        self.assertEqual(len(PROMPTS), 20)
+        self.assertEqual(len(PROMPTS), 21)
         self.assertIn('id="prompt-analytic"', TEXT)
         self.assertIn('id="prompt-cand"', TEXT)
         self.assertNotIn("{{", TEXT)

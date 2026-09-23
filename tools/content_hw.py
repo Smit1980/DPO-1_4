@@ -20,10 +20,10 @@ def s13() -> str:
     b += card("Как пользоваться шаблонами промптов",
               paras(["Все шаблоны построены одинаково: <b>задача</b>, <b>для кого</b>, <b>что известно</b>, <b>что сделать</b>, <b>формат</b>, <b>границы</b>. Всё, что зависит от фактов, стоит в квадратных скобках — заполняете вы, не модель. Роль, если указана, задаёт позицию, формат и тон; проверка фактов остаётся за вами.",
                      "Перед использованием: 1) прочитайте описание промпта; 2) замените поля в скобках условными данными; 3) отправьте в разрешённый инструмент; 4) проверьте результат по пяти проверкам. Для показа на занятии один и тот же промпт отправляйте по очереди в GigaChat, DeepSeek и ChatGPT в новых чатах."]))
-    # таблица-каталог всех 20 промптов
+    # таблица-каталог всех промптов
     rows = [[p["id"], p["title"], p["group"]] for p in PROMPTS]
-    b += table("Каталог: 20 промптов урока", ["№", "Название", "Группа"], rows)
-    b += '<div class="deep-bar fade"><span>⌨️ Все 20 промптов</span><b>Копируются целиком одной кнопкой</b></div>'
+    b += table(f"Каталог: {len(PROMPTS)} промптов урока", ["№", "Название", "Группа"], rows)
+    b += f'<div class="deep-bar fade"><span>⌨️ Все {len(PROMPTS)} промптов</span><b>Копируются целиком одной кнопкой</b></div>'
     for g in GROUP_ORDER:
         items = [p for p in PROMPTS if p["group"] == g]
         if not items:
@@ -31,7 +31,7 @@ def s13() -> str:
         b += f'<h3 class="fade" style="margin:22px 0 8px;font-size:1.05rem">{g}</h3><div class="pk-grid">' + "".join(f"{{{{PK:{p['id']}}}}}" for p in items) + "</div>"
     b += '<p class="q-hint fade">Дополнительно: восемь промптов практикума (кейсы 1–7 и заготовка документа из десяти пунктов) — в разделе «Практикум» выше и в файле промптов. Все данные в промптах условные.</p>'
     b += """<div class="dl-grid fade" style="margin-top:20px">
-    <a class="dl" href="../data/urok4/prompty_urok4.docx" download><span class="ico">📝</span><div><b>Промпты урока · DOCX</b><span>20 промптов + 8 промптов практикума</span></div><span class="arrow">↓</span></a>
+    <a class="dl" href="../data/urok4/prompty_urok4.docx" download><span class="ico">📝</span><div><b>Промпты урока · DOCX</b><span>21 промпт + 8 промптов практикума</span></div><span class="arrow">↓</span></a>
     <a class="dl" href="../data/urok4/prompty_urok4.xlsx" download><span class="ico">📊</span><div><b>Промпты урока · XLSX</b><span>Таблица с группами и описаниями, для менеджера промптов</span></div><span class="arrow">↓</span></a>
     <a class="dl" href="../data/urok4/prompty_urok4.txt" download><span class="ico">📄</span><div><b>Промпты урока · TXT</b><span>Одним текстом</span></div><span class="arrow">↓</span></a>
     <a class="dl" href="../data/urok4/prompty_urok4.csv" download><span class="ico">🧾</span><div><b>Промпты урока · CSV</b><span>Для импорта</span></div><span class="arrow">↓</span></a>

@@ -140,7 +140,7 @@ DL = """<section class="sec" id="dl">
     <a class="dl" href="../data/urok4/pamyatka_1_pered_otpravkoy_v_ii.pdf" download><span class="ico">🚦</span><div><b>Памятка 1 · Перед отправкой в ИИ</b><span>PDF · пять вопросов, четыре приёма, метаданные, если данные уже ушли</span></div><span class="arrow">↓</span></a>
     <a class="dl" href="../data/urok4/pamyatka_2_proverka_rezultata_ii.pdf" download><span class="ico">✅</span><div><b>Памятка 2 · Проверка результата ИИ</b><span>PDF · пять проверок, проверка факта, тест «поменяй деталь», проверка поручения</span></div><span class="arrow">↓</span></a>
     <a class="dl" href="../data/urok4/pasport_bezopasnoy_zadachi.docx" download><span class="ico">📋</span><div><b>Паспорт безопасной задачи</b><span>DOCX · бланк и заполненный образец</span></div><span class="arrow">↓</span></a>
-    <a class="dl" href="../data/urok4/prompty_urok4.docx" download><span class="ico">⌨️</span><div><b>Промпты урока 4</b><span>DOCX · 20 шаблонов и 8 промптов практикума: письмо, записка, проверка, роль</span></div><span class="arrow">↓</span></a>
+    <a class="dl" href="../data/urok4/prompty_urok4.docx" download><span class="ico">⌨️</span><div><b>Промпты урока 4</b><span>DOCX · 21 шаблон и 8 промптов практикума: письмо, записка, проверка, роль</span></div><span class="arrow">↓</span></a>
   </div>
   <div class="dl-grid fade">
     <a class="dl" href="../data/urok4/zayavka_uchebnaya_s_metadannymi.docx" download><span class="ico">📝</span><div><b>zayavka_uchebnaya_s_metadannymi.docx</b><span>Для практики 2: скрытое внутри файла</span></div><span class="arrow">↓</span></a>
@@ -171,15 +171,17 @@ CHECK_ITEMS_B = [
 ]
 
 
-def checklist() -> str:
+def checklist(groups: list[tuple[str, list[str], int]] | None = None, desc: str | None = None) -> str:
     def group(title: str, items: list[str], start: int) -> str:
         li = "".join(f'<li><label><input type="checkbox" data-checklist-item="c{start + i}"> {t}</label></li>' for i, t in enumerate(items))
         return f'<div class="check-group"><h3>{title}</h3><ul class="checklist-items">{li}</ul></div>'
+    if groups is None:
+        groups = [("Перед отправкой в ИИ (пара 1)", CHECK_ITEMS_A, 1), ("Перед использованием результата (пара 2)", CHECK_ITEMS_B, 100)]
+    d = desc or "Отметки сохраняются в вашем браузере. Пройдите список перед отправкой запроса и перед использованием результата."
     return ('<section class="sec" id="checklist"><div class="sec-head fade"><div class="num-badge n10">✓</div>'
-            '<h2 class="sec-title">Мой чек-лист</h2><p class="sec-desc">Отметки сохраняются в вашем браузере. Пройдите список перед отправкой запроса и перед использованием результата.</p></div>'
+            f'<h2 class="sec-title">Мой чек-лист</h2><p class="sec-desc">{d}</p></div>'
             '<div class="card fade"><div class="checklist-progress-bar"><div class="checklist-progress-fill" id="checklist-progress"></div></div>'
-            + group("Перед отправкой в ИИ (пара 1)", CHECK_ITEMS_A, 1)
-            + group("Перед использованием результата (пара 2)", CHECK_ITEMS_B, 100)
+            + "".join(group(t, items, s) for t, items, s in groups)
             + '<p class="checklist-done" id="checklist-done" hidden>Готово — можно работать с ИИ ответственно.</p></div></section>')
 
 
@@ -214,16 +216,17 @@ QUIZ = [
 ]
 
 
-def quiz() -> str:
+def quiz(items: list | None = None) -> str:
+    items = QUIZ if items is None else items
     out = []
-    for i, (q, opts, right, why) in enumerate(QUIZ, 1):
+    for i, (q, opts, right, why) in enumerate(items, 1):
         labels = "".join(f'<label><input type="radio" name="q{i}" value="{"right" if j == right else "wrong"}"> {E(o)}</label>' for j, o in enumerate(opts))
         out.append(f'<div class="quiz-question" data-quiz="{i}" data-explain="{E(why, quote=True)}"><p class="quiz-text">{i}. {E(q)}</p>'
                    f'<div class="quiz-options">{labels}</div><button type="button" class="quiz-check" data-quiz-check="{i}">Проверить</button>'
                    f'<p class="quiz-feedback" data-quiz-feedback="{i}" hidden></p></div>')
     return ('<section class="sec" id="quiz"><div class="sec-head fade"><div class="num-badge n11">?</div><h2 class="sec-title">Проверьте себя</h2>'
-            f'<p class="sec-desc">{len(QUIZ)} вопросов с разбором. Правильный вариант подсвечивается после ответа.</p></div>'
-            f'<div class="quiz fade">{"".join(out)}<p class="quiz-score" id="quiz-score">Отвечено: 0 / {len(QUIZ)}</p></div></section>')
+            f'<p class="sec-desc">{len(items)} вопросов с разбором. Правильный вариант подсвечивается после ответа.</p></div>'
+            f'<div class="quiz fade">{"".join(out)}<p class="quiz-score" id="quiz-score">Отвечено: 0 / {len(items)}</p></div></section>')
 
 
 HEAD = f"""<!DOCTYPE html>
