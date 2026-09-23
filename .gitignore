@@ -13,3 +13,5 @@ png/urok4/
 png/urok5/
 data/sinteticheskie_zayavki_50.xlsx
 tools/konspekt_more.py
+tools/konspekt_urok5_data.py
+tools/build_konspekt5.py
