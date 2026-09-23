@@ -142,12 +142,8 @@ class Page(unittest.TestCase):
         self.assertEqual(list((ROOT / "data").rglob("*.pptx")) + list((ROOT / "data").rglob("slaydy*")), [])
 
     def test_all_slide_images_exist(self):
-        # 28-30: запрошены 23.09.2026 (152-ФЗ, политика конфиденциальности, GAN), картинок пока нет — страница показывает заглушку.
-        PENDING = {28, 29, 30}
         from lib import SLIDES, img_name
         for n in SLIDES:
-            if n in PENDING:
-                continue
             self.assertTrue((ROOT / "png" / "urok4_podgotovka_i_riski" / img_name(n)).is_file(), n)
 
     def test_role_is_accented(self):
