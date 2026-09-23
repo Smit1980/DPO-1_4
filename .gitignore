@@ -10,5 +10,6 @@ __pycache__/
 web/_shot.html
 assets/
 png/urok4/
+png/urok5/
 data/sinteticheskie_zayavki_50.xlsx
 tools/konspekt_more.py
