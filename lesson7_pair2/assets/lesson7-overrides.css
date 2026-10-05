@@ -1,0 +1,48 @@
+/* Урок 7: отдельные стили для историй кейсов и слайдов пользователя. */
+.story {
+  margin: 20px 0;
+  padding: 18px 22px;
+  background: linear-gradient(100deg, #f6faff, #e8f2ff);
+  border: 1px solid #bfd2f0;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px #0020600a;
+}
+.story strong {
+  display: block;
+  color: var(--navy);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.story p { margin: 7px 0 0; font-size: 16px; line-height: 1.55; }
+.slide-figure { margin: 28px 0; }
+.slide-figure .generated-slide {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border-radius: 16px;
+  box-shadow: 0 14px 40px #0020601a;
+}
+.slide-figure figcaption {
+  margin: 9px 2px 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.public-materials-note {
+  max-width: 1180px;
+  margin: 24px auto 0;
+  padding: 13px 18px;
+  color: #15366d;
+  background: #edf5ff;
+  border: 1px solid #b9d7fb;
+  border-left: 5px solid var(--blue);
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+@media print {
+  .slide-figure .generated-slide { max-height: 500px; object-fit: contain; }
+  .public-materials-note { display: none; }
+}
