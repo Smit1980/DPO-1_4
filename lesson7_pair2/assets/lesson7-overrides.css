@@ -42,6 +42,24 @@
   font-size: 14px;
   line-height: 1.5;
 }
+.synthetic-notice {
+  margin: 18px 0 12px;
+  padding: 16px 20px;
+  color: #002060;
+  background: linear-gradient(100deg, #e5efff, #f7fbff);
+  border: 1px solid #9bbdf7;
+  border-left: 6px solid #0047ff;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px #0047ff12;
+}
+.synthetic-notice strong {
+  display: block;
+  color: #0047ff;
+  font-size: 13px;
+  letter-spacing: .08em;
+}
+.synthetic-notice p { margin: 6px 0; line-height: 1.5; }
+.synthetic-notice a { font-weight: 800; }
 @media print {
   .slide-figure .generated-slide { max-height: 500px; object-fit: contain; }
   .public-materials-note { display: none; }
